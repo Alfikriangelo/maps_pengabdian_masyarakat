@@ -1,0 +1,9 @@
+flask==3.0.0
+pymongo
+dnspython
+flask_pymongo
+bcrypt
+flask_cors
+flask_wtf
+flask_uploads
+werkzeug

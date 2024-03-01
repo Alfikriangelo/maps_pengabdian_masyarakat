@@ -1,0 +1,59 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  .app-container {
+    position: relative;
+  }
+  
+  .tombol-warga {
+    position: absolute;
+    top: 35px;
+    right: 480px;
+    z-index: 1000; 
+    text-transform: none;
+  }
+ 
+  .tombol-logout {
+    position: absolute;
+    top: 35px;
+    right: 10px; 
+    z-index: 1000; 
+    text-transform: none;
+  }
+
+  .tombol-surat {
+    position: absolute;
+    top: 35px;
+    right: 380px; 
+    z-index: 1000; 
+    text-transform: none;
+  }
+  .sidebar-container{
+    position: absolute;
+    top: 0px;
+    left: 0px; 
+    z-index: 2000; 
+    background-color: white;
+
+  }
+  .search-bar-container {
+    position: absolute;
+    right: 115px;
+    z-index: 2000; 
+    background-color: rgb(255, 255, 255);
+    border-radius: 15px;
+    top: 25px;
+  }
+  
+  /* Remove borders from TextField */
+  .search-bar-container .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline {
+    border: none;
+  }
+  
+  /* Remove box shadow on focus */
+  .search-bar-container .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+    box-shadow: none;
+  }
+  

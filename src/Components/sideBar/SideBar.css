@@ -1,0 +1,177 @@
+@import url('https://fonts.googleapis.com/css2?family=Sora&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap');
+
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  color: rgb(0, 0, 0);
+  margin: 0;
+  padding: 0;
+ }
+ 
+ .container {
+  position: relative;
+  max-width: 3300px;
+
+  margin: 0px;
+  margin-left: 0px;
+  padding: 0px;
+ }
+
+ .header1{
+  color: #202124;
+  font-family: "Google Sans",Roboto,Arial,sans-serif;
+  font-size: 22px;
+  font-style: normal;
+  font-weight: bold;
+  line-height: 28px;
+  padding: 16px 24px 0px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: '8px';
+ }
+ 
+ .pin{
+  display: flex;
+  position: relative;
+  padding-right: 2px;
+  color: #70757a;
+ }
+.alamat{
+  width: 400px;
+  padding-left: 10px;
+  color: #70757a;
+  font-weight: 100;
+  font-family: Arial;
+  padding: 0px 24px 4px 24px;
+  display: flex;
+  flex-direction: row;
+  align-items: left;
+  gap: '8px';
+}
+
+.detail-container{
+  margin: 20px 16px 5px 16px;
+  display: flex;
+  align-items: center;
+}
+
+.detail{
+  color: #000000;
+  font-family: "SF Pro Display-Semibold", Helvetica;
+  font-size: 20px;
+  font-weight: bold;
+
+}
+
+.see-all{
+  font-size: medium;
+  margin-left: 236px;
+  cursor: pointer;
+  color: #1a73e8;
+}
+
+.container-isi {
+  display: flex;
+  position: relative;
+  margin-left: 16px;
+  align-items: stretch;
+  padding: 10px 15px;
+
+  border-radius: 10px;
+  flex-direction: column;
+  width: 365px;
+  margin-bottom: 10px;
+}
+
+.row1 {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5px;
+}
+
+.row2 {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 10px;
+}
+
+.nama {
+  width: 400px;
+  padding-left: 0px;
+  color: #70757a;
+  font-size: small;
+  font-weight: 100;
+  font-family: "Google Sans", Roboto, Arial, sans-serif;
+  text-align: left;
+}
+
+.see-more {
+  width: 400px;
+  padding-left: 0px;
+  color: #1a73e8;
+  font-weight: 100;
+  font-family: "Google Sans", Roboto, Arial, sans-serif;
+  text-align: right;
+}
+
+.warga-name {
+  padding-left: 0px;
+  color: #000000;
+  font-weight: normal;
+  font-family: "Google Sans", Roboto, Arial, sans-serif;
+
+}
+
+.header-line {
+  margin: 10px 20px;
+  width: 360px;
+  border: none;
+  border-top: 2px solid #BDBDBD;
+}
+
+.container-line {
+  width: 450px;
+  margin-top: 8px;
+  border-top: 1px solid #BDBDBD;
+}
+
+.delete {
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+  justify-content: flex-end;
+  align-items: center;
+  align-content: center;
+}
+.update {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  text-align: center;
+  align-items: center;
+  align-content: center;
+}
+
+.delete button {
+  margin-top: 10px; /* Sesuaikan jarak dari tombol ke elemen atasnya */
+  width: 100%; /* Menyesuaikan lebar tombol dengan lebar elemen induknya */
+}
+.warga-name-container {
+  display: flex;
+  flex-direction: column;
+}
+.row2-kepala{
+  display: flex;
+  flex-direction: column;
+}
+
+.row2-keluarga{
+  display: flex;
+  flex-direction: column;
+}
+
+.see-photo{
+  font-size: small;
+  color: #1a73e8;
+}
