@@ -1,5 +1,4 @@
 from flask import Flask, request, jsonify, send_from_directory, current_app
-from pymongo import MongoClient 
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
 from datetime import datetime
@@ -34,11 +33,6 @@ def before_request():
 def hello_world():  
     return 'ye bisa'
 
-client = MongoClient("mongodb+srv://tes:tes@cluster1.tbcoubt.mongodb.net/?retryWrites=true&w=majority") 
-
-db = client['mydb'] 
-
-collection = db['pengguna'] 
 
 def ensure_upload_folder():
     if not os.path.exists(UPLOAD_FOLDER):
