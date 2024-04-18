@@ -230,14 +230,10 @@ const SideBar = ({ isOpen, selectedMarkerData, surat, onClose, hapus }) => {
               <span className='nama'>Foto KK</span>
             </div>
             <div>
-              {Array.isArray(selectedMarkerData.image_url_KK) ? (
-                selectedMarkerData.image_url_KK.map((image_url, index) => (
+              {Array.isArray(selectedMarkerData.statusKTP) ? (
+                selectedMarkerData.statusKTP.map((ktp, index) => (
                   <div key={index} className='warga-name-container'>
-                    <img
-                      src={image_url}
-                      alt={`KK ${index + 1}`}
-                      style={{ display: 'block', margin: '0 auto', height: '300px', marginTop: 10 }}
-                    />
+                    {ktp}
                   </div>
                 ))
               ) : (
@@ -252,14 +248,10 @@ const SideBar = ({ isOpen, selectedMarkerData, surat, onClose, hapus }) => {
               <span className='nama'>Foto KTP</span>
             </div>
             <div>
-              {Array.isArray(selectedMarkerData.image_url_KTP) ? (
-                selectedMarkerData.image_url_KTP.map((image_url, index) => (
+              {Array.isArray(selectedMarkerData.statusKK) ? (
+                selectedMarkerData.statusKK.map((kk, index) => (
                   <div key={index} className='warga-name-container'>
-                    <img
-                      src={image_url}
-                      alt={`KTP ${index + 1}`}
-                      style={{ display: 'block', margin: '0 auto', height: '300px', marginTop: 10 }}
-                    />
+                    {kk}
                   </div>
                 ))
               ) : (

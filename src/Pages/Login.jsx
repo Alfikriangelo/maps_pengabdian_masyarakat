@@ -13,6 +13,7 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import gov from "../icons/govern.png";
 
 const Login = () => {
   const { login } = useAuth();
@@ -67,22 +68,33 @@ const Login = () => {
       <Grid container component="main" sx={{ height: "100vh" }}>
         <CssBaseline />
         <Grid
+          container
           item
           xs={false}
           sm={4}
           md={7}
           sx={{
-            backgroundImage:
-              "url(https://source.unsplash.com/random?wallpapers)",
-            backgroundRepeat: "no-repeat",
-            backgroundColor: (t) =>
-              t.palette.mode === "light"
-                ? t.palette.grey[50]
-                : t.palette.grey[900],
-            backgroundSize: "cover",
+            backgroundImage: `url(${gov})`, // Gunakan backtick (`) untuk string literal
+            backgroundColor: "#3874cc",
+            backgroundSize: "50%",
             backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
           }}
-        />
+        >
+          <Typography
+            variant="h4"
+            sx={{
+              position: "absolute", // Atur posisi ke absolute agar tulisan dapat diposisikan di atas gambar
+              bottom: "200px", // Sesuaikan dengan jarak dari bawah gambar
+              left: "29%", // Tempatkan tulisan di tengah
+              transform: "translateX(-50%)", // Pusatkan tulisan secara horizontal
+              color: "white", // Atur warna tulisan
+            }}
+          >
+            Data Kependudukan Desa
+          </Typography>
+        </Grid>
+
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
           <Box
             sx={{
@@ -99,7 +111,7 @@ const Login = () => {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-            Sistem Informasi RT 05 / RW 24
+              Sistem Informasi RT 05 / RW 24
             </Typography>
             <Box
               component="form"

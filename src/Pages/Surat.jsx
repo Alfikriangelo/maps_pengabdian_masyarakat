@@ -16,6 +16,8 @@ import { useNavigate } from 'react-router-dom';
 import html2pdf from 'html2pdf.js';
 import Autocomplete from '@mui/material/Autocomplete';
 import axios from 'axios';
+import './Surat.css'; // Importing CSS
+
 
 const Surat = () => {
   const navigate = useNavigate();
@@ -51,7 +53,7 @@ const Surat = () => {
       padding: 10,
     };
 
-    const fileName = `surat_${nomorSurat}_${selectedName}.pdf`;
+    const fileName = 'surat_${nomorSurat}_${selectedName}.pdf';
 
     // Kirim file name dan "nama" ke backend
     fetch('http://127.0.0.1:5000/save_file_name', {
@@ -100,59 +102,59 @@ const Surat = () => {
 
   return (
     <>
-      <main className='m-5 p-10 md:max-w-xl md:mx-auto lg:max-w-2xl xl:max-w-4xl bg-white rounded shadow'>
+      
+      <div style={{ background: '#EFEFEF', marginTop: '-80px' }}>
+
+      <main className='main-container'>
         {showInvoice ? (
           <>
-          <div className='button-top' style={{display: 'flex', flexDirection: 'row'}}>
-            <Button variant='outlined' onClick={() => navigate('/maps')} style={{ textTransform: 'none', marginRight: '630px' }}>
-              Kembali
-            </Button>
-            <Button
-              variant='outlined'
-              onClick={handleDownload}
-              style={{ textTransform: 'none'}}>
-              Download
-            </Button>
-            </div>
-            <div ref={componentRef} className='p-5'>
-              <Header handlePrint={handlePrint} />
-              <Judul nomorSurat={nomorSurat} />
-              <Pembuka />
-              <Isi
-                nama={selectedName}
-                ttl={selectedData.ttl}
-                pekerjaan={selectedData.pekerjaan}
-                pendidikanTerakhir={selectedData.pendidikanTerakhir}
-                blok={selectedData.blok}
-                noRumah={selectedData.noRumah}
-                keteranganSurat={keteranganSurat}
-                tanggal={selectedData.tanggal}
-              />
-              <Penutup />
-              <p className='text-right mt-10 mr-2'>Ketua Rukun Tetangga 05</p>
-              <div className='text-right mt-10'>
-                <SignatureCanvas
-                  ref={signatureRef}
-                  canvasProps={{ width: 400, height: 200, className: 'signature-canvas ml-auto' }}
-                />
-              </div>
-            </div>
-            <div className='text-right'>
-              <button
-                className='bg-red-500 mb-5 text-white font-bold py-2 px-8 rounded shadow border-2 border-red-500 hover:bg-transparent hover:text-red-500 transition-all duration-300 ml-auto'
-                onClick={clearSignature}>
-                Hapus
-              </button>
-            </div>
-            <button
-              onClick={() => setShowInvoice(false)}
-              className='mt-5 bg-blue-500 text-white font-bold py-2 px-8 rounded shadow border-2 border-blue-500 hover:bg-transparent hover:text-blue-500 transition-all duration-300'>
-              Edit
-            </button>
+          <div className='button-top'>
+    <Button onClick={() => navigate('/maps')} style={{ textTransform: 'none' }}>
+      Kembali
+    </Button>
+    <Button variant='outlined' onClick={handleDownload} style={{ textTransform: 'none'}}>
+      Download
+    </Button>
+  </div>
+  <div ref={componentRef} className='p-5'>
+    <Header handlePrint={handlePrint} />
+    <Judul nomorSurat={nomorSurat} />
+    <Pembuka />
+    <Isi
+      nama={selectedName}
+      ttl={selectedData.ttl}
+      pekerjaan={selectedData.pekerjaan}
+      pendidikanTerakhir={selectedData.pendidikanTerakhir}
+      blok={selectedData.blok}
+      noRumah={selectedData.noRumah}
+      keteranganSurat={keteranganSurat}
+      tanggal={selectedData.tanggal}
+    />
+    <Penutup />
+    <p className='text-right mt-10 mr-2'>Ketua Rukun Tetangga 05</p>
+    <div className='text-right mt-10'>
+      <SignatureCanvas
+        ref={signatureRef}
+        canvasProps={{ width: 400, height: 200, className: 'signature-canvas' }}
+      />
+    </div>
+  </div>
+  <div className='button-bottom'>
+    <Button className='red-button' onClick={clearSignature}>
+      Hapus
+    </Button>
+    <Button onClick={() => setShowInvoice(false)} className='blue-button'>
+      Edit
+    </Button>
+    </div>
           </>
         ) : (
           <>
-            <p className='font-bold text-3xl mb-3 text-center'>Surat</p>
+            
+            <p className='font-bold text-3xl mb-3 text-left margin-top 30px' style={{marginTop: '30px', marginRight : '30px'}} >Form Surat Masuk</p>
+            <p className=' text-xl mb-3 text-left' style={{paddingBottom: '20px', marginBottom: '30px', borderBottom: '0.5px solid black'}}>
+            Layanan Surat Masuk</p>
+
             <div className='flex flex-col justify-center'>
               <label htmlFor='nomorSurat' className='mb-2'>
                 Nomor Surat
@@ -229,7 +231,7 @@ const Surat = () => {
                 onChange={(e) => setSelectedData({ ...selectedData, blok: e.target.value })}
               />
               <label htmlFor='noRumah' className='mb-2 mt-2'>
-                No Rumah
+                Nomor Rumah
               </label>
               <TextField
                 type='text'
@@ -241,15 +243,15 @@ const Surat = () => {
                 onChange={(e) => setSelectedData({ ...selectedData, noRumah: e.target.value })}
               />
               <label htmlFor='notes' className='mb-2 mt-2'>
-                Keterangan
+                Isi Surat
               </label>
               <textarea
                 className='mt-2 mb-2'
                 name='keterangan'
                 id='notes'
-                cols='30'
+                cols='20'
                 rows='10'
-                placeholder='Keterangan Surat'
+                placeholder='Beri Keterangan Surat Secara Singkat'
                 value={keteranganSurat}
                 onChange={(e) => setKeteranganSurat(e.target.value)}></textarea>
               <div className='mt-5 mb-5'>
@@ -263,7 +265,7 @@ const Surat = () => {
                   </DemoContainer>
                 </LocalizationProvider>
               </div>
-              <div className='flex' style={{ justifyContent: 'space-between' }}>
+              <div className='flex' style={{ justifyContent: 'space-between', marginTop : '30px'}}>
                 <Button variant='outlined' onClick={() => navigate('/maps')}>
                   Kembali
                 </Button>
@@ -275,6 +277,7 @@ const Surat = () => {
           </>
         )}
       </main>
+      </div>
     </>
   );
 };
