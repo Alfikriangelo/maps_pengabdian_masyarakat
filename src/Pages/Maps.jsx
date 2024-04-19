@@ -11,11 +11,15 @@ import TombolLogout from "../Components/Logout/tombolLogout";
 import { Button, InputAdornment, TextField } from "@mui/material";
 import SideBar from "../Components/sideBar/SideBar.jsx";
 import SearchIcon from "@mui/icons-material/Search";
+import maps from "../icons/Map.jpg"
+import { ImageOverlay } from 'react-leaflet';
 
 const customIcon = new Icon({
   iconUrl: require("../icons/placeholder.png"),
   iconSize: [38, 38],
 });
+
+const imageBounds = [[-7.005964, 107.635655], [-7.00476, 107.63795]];
 
 const createClusterCustomIcon = function (cluster) {
   return new divIcon({
@@ -176,12 +180,12 @@ const Maps = () => {
         <TombolTambahWarga />
         <TombolTambahSurat />
 
-        <MapContainer center={[-7.0053677, 107.6368018]} zoom={19}>
-          <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
-          <MarkerClusterGroup
+        <MapContainer center={[-7.0053677, 107.6368018]} zoom={20} maxZoom={22} scrollWheelZoom={false} dragging={false}>
+    {/* Tambahkan ImageOverlay sebagai gambar latar belakang */}
+    <ImageOverlay url={maps} bounds={imageBounds} zIndex={10} />
+
+    {/* Tambahkan marker di atas gambar menggunakan koordinat pada gambar */}
+    <MarkerClusterGroup
             chunkedLoading
             iconCreateFunction={createClusterCustomIcon}
           >
@@ -211,9 +215,8 @@ const Maps = () => {
                   ></Marker>
                 ))}
           </MarkerClusterGroup>
+  </MapContainer>
 
-          <Polygon pathOptions={purpleOptions} positions={multiPolygon} />
-        </MapContainer>
       </div>
     </div>
   );
