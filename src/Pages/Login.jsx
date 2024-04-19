@@ -81,18 +81,18 @@ const Login = () => {
             backgroundRepeat: "no-repeat",
           }}
         >
-          <Typography
+          {/* <Typography
             variant="h4"
             sx={{
               position: "absolute", // Atur posisi ke absolute agar tulisan dapat diposisikan di atas gambar
-              bottom: "200px", // Sesuaikan dengan jarak dari bawah gambar
+              marginTop: "30%", // Atur tinggi tulisa
               left: "29%", // Tempatkan tulisan di tengah
               transform: "translateX(-50%)", // Pusatkan tulisan secara horizontal
               color: "white", // Atur warna tulisan
             }}
           >
             Data Kependudukan Desa
-          </Typography>
+          </Typography> */}
         </Grid>
 
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>

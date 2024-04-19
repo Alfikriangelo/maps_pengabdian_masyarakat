@@ -21,7 +21,7 @@ const SideBar = ({ isOpen, selectedMarkerData, surat, onClose, hapus }) => {
   };
 
   return (
-    <Sidebar collapsed={!isOpen} style={{ width: '55vh' }}>
+    <Sidebar collapsed={!isOpen} style={{ width: '80vh' }}>
       {selectedMarkerData && (
         <div className='container' style={{ padding: 0, height: '100vh', position: 'relative' }}>
           <button onClick={onClose} style={{
