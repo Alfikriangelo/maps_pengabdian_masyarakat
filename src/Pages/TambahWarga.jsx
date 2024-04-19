@@ -84,7 +84,6 @@ export default function TambahWarga({
     }
   }, [initialCoordinatesRef.current]);
 
-
   const [activeStep, setActiveStep] = React.useState(0);
   const navigate = useNavigate();
 
@@ -229,7 +228,7 @@ export default function TambahWarga({
                 )}
                 {/* Tambahkan tombol "Next" untuk melanjutkan ke langkah berikutnya */}
                 <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                <Button
+                  <Button
                     sx={{ mt: 3, ml: 1 }}
                     variant="outlined"
                     onClick={() => navigate("/maps")}
@@ -1009,7 +1008,7 @@ function AddressForm({ formData, setFormData, setIsFormValid }) {
         </Grid>
         <Grid item xs={12} sm={6} sx={{ padding: "20px" }}>
           <TextField
-            required
+            select
             id="statusKTP"
             name="statusKTP"
             label="KTP"
@@ -1032,14 +1031,19 @@ function AddressForm({ formData, setFormData, setIsFormValid }) {
                 marginLeft: "3px",
               },
             }}
-            value={formData.statusKTP}
-            onChange={handleChange}
-          />
+            value={formData.statusKTP || ""}
+            onChange={(e) => {
+              handleChange(e);
+            }}
+          >
+            <MenuItem value="Arsip tersimpan">Arsip Tersimpan</MenuItem>
+            <MenuItem value="Arsip tidak ada">Arsip Tidak ada</MenuItem>
+          </TextField>
         </Grid>
 
         <Grid item xs={12} sm={6} sx={{ padding: "20px" }}>
           <TextField
-            required
+            select
             id="statusKK"
             name="statusKK"
             label="Kartu Keluarga"
@@ -1062,9 +1066,14 @@ function AddressForm({ formData, setFormData, setIsFormValid }) {
                 marginLeft: "3px",
               },
             }}
-            value={formData.statusKK}
-            onChange={handleChange}
-          />
+            value={formData.statusKK || ""}
+            onChange={(e) => {
+              handleChange(e);
+            }}
+          >
+            <MenuItem value="Arsip tersimpan">Arsip Tersimpan</MenuItem>
+            <MenuItem value="Arsip tidak ada">Arsip Tidak ada</MenuItem>
+          </TextField>
         </Grid>
         <Grid item xs={12}>
           <Typography variant="h6">Kelengkapan Foto</Typography>
@@ -1645,7 +1654,7 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
               </Grid>
               <Grid item xs={12} sm={6} sx={{ padding: "20px" }}>
                 <TextField
-                  required
+                  select
                   id={`statusktpIstri${index + 1}`}
                   name={`statusktpIstri${index + 1}`}
                   label={`KTP Istri ${index + 1}`}
@@ -1669,9 +1678,14 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
                       marginLeft: "3px",
                     },
                   }}
-                  value={formData[`statusktpIstri${index + 1}`]}
-                  onChange={handleChange}
-                />
+                  value={formData[`statusktpIstri${index + 1}`] || ""}
+                  onChange={(e) => {
+                    handleChange(e);
+                  }}
+                >
+                  <MenuItem value="Arsip tersimpan">Arsip Tersimpan</MenuItem>
+                  <MenuItem value="Arsip tidak ada">Arsip Tidak ada</MenuItem>
+                </TextField>
               </Grid>
             </React.Fragment>
           ))}
@@ -1879,7 +1893,7 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
                 </Grid>
                 <Grid item xs={12} sm={6} sx={{ padding: "20px" }}>
                   <TextField
-                    required
+                    select
                     id={`statusktpIstri${index + 1}`}
                     name={`statusktpIstri${index + 1}`}
                     label={`KTP Istri ${index + 1}`}
@@ -1903,9 +1917,14 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
                         marginLeft: "3px",
                       },
                     }}
-                    value={formData[`statusktpIstri${index + 1}`]}
-                    onChange={handleChange}
-                  />
+                    value={formData[`statusktpIstri${index + 1}`] || ""}
+                    onChange={(e) => {
+                      handleChange(e);
+                    }}
+                  >
+                    <MenuItem value="Arsip tersimpan">Arsip Tersimpan</MenuItem>
+                    <MenuItem value="Arsip tidak ada">Arsip Tidak ada</MenuItem>
+                  </TextField>
                 </Grid>
               </React.Fragment>
             ))}
@@ -2146,7 +2165,7 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
                         </Grid>
                         <Grid item xs={12} sm={6} sx={{ padding: "20px" }}>
                           <TextField
-                            required
+                            select
                             id={`statusktpAnak${index + 1}`}
                             name={`statusktpAnak${index + 1}`}
                             label={`KTP Anak ${index + 1}`}
@@ -2170,9 +2189,18 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
                                 marginLeft: "3px",
                               },
                             }}
-                            value={formData[`statusktpAnak${index + 1}`]}
-                            onChange={handleChange}
-                          />
+                            value={formData[`statusktpAnak${index + 1}`] || ""}
+                            onChange={(e) => {
+                              handleChange(e);
+                            }}
+                          >
+                            <MenuItem value="Arsip tersimpan">
+                              Arsip Tersimpan
+                            </MenuItem>
+                            <MenuItem value="Arsip tidak ada">
+                              Arsip Tidak ada
+                            </MenuItem>
+                          </TextField>
                         </Grid>
                         <Grid item xs={12} sx={{ padding: "20px" }}>
                           <TextField
@@ -2223,4 +2251,3 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
     </React.Fragment>
   );
 }
-
