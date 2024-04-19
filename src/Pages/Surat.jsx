@@ -103,7 +103,7 @@ const Surat = () => {
   return (
     <>
       
-      <div style={{ background: '#EFEFEF', marginTop: '-80px' }}>
+      <div style={{ marginTop: '-80px' }}>
 
       <main className='main-container'>
         {showInvoice ? (
@@ -151,9 +151,7 @@ const Surat = () => {
         ) : (
           <>
             
-            <p className='font-bold text-3xl mb-3 text-left margin-top 30px' style={{marginTop: '30px', marginRight : '30px'}} >Form Surat Masuk</p>
-            <p className=' text-xl mb-3 text-left' style={{paddingBottom: '20px', marginBottom: '30px', borderBottom: '0.5px solid black'}}>
-            Layanan Surat Masuk</p>
+            <p className='font-bold text-3xl mb-3 text-left margin-top 30px' style={{marginTop: '30px', marginRight : '30px'}} >Layanan Surat</p>
 
             <div className='flex flex-col justify-center'>
               <label htmlFor='nomorSurat' className='mb-2'>
