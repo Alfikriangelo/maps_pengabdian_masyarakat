@@ -136,6 +136,9 @@ const Maps = () => {
               </InputAdornment>
             ),
           }}
+          InputLabelProps={{
+            shrink: !!searchInput, // Mengatur shrink ke true jika ada nilai dalam searchInput
+          }}
         />
       </div>
 
@@ -147,8 +150,7 @@ const Maps = () => {
         <div className="image-container">
           <img
             src={background}
-            className="custom-map-image"
-            style={{ height: "100%", width: "100%", objectFit: "cover" }}
+            style={{ height: "100vh", width: "100%", objectFit: "cover" }} // ubah tinggi menjadi 80vh
             alt="Map"
           />
           {searchResults.length > 0
