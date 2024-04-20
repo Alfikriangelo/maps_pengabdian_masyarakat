@@ -32,7 +32,7 @@
 /* Add these styles to position the form to the top-right corner */
 .form-container {
   position: absolute;
-  bottom: 10px;  /* Change top to bottom */
+  bottom: 10px; /* Change top to bottom */
   right: 10px;
   z-index: 1000;
   background-color: white;
@@ -42,7 +42,6 @@
 }
 
 /* CSS for the toggle button */
-
 
 /* Add these styles to align the button and text fields */
 .form-container form {
