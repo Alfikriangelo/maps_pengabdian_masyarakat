@@ -16,7 +16,7 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { useNavigate } from "react-router-dom";
 import { faMapMarker } from "@fortawesome/free-solid-svg-icons";
 import "./TambahWarga.css";
-import maps1 from "../icons/maps.jpg";
+import maps1 from "../icons/maps2.png";
 import pin from "../icons/placeholder.png";
 
 library.add(faMapMarker);
@@ -459,12 +459,19 @@ function AddressForm({ formData, setFormData, setIsFormValid }) {
     const offsetX = event.clientX - boundingRect.left;
     const offsetY = event.clientY - boundingRect.top;
 
-    // Menyimpan nilai x dan y dari posisi klik
-    setClickedPosition({ x: offsetX, y: offsetY });
+    // Menghitung nilai x dan y sebagai persentase dari lebar dan tinggi gambar
+    const imageWidth = event.target.width;
+    const imageHeight = event.target.height;
+    const offsetXPercent = (offsetX / imageWidth) * 100;
+    const offsetYPercent = (offsetY / imageHeight) * 100;
 
+    // Menyimpan nilai x dan y dalam persen dari posisi klik
+    setClickedPosition({ x: offsetXPercent, y: offsetYPercent });
+
+    // Menyimpan koordinat dalam bentuk persen (lat: y, lng: x)
     setFormData({
       ...formData,
-      coordinates: { lat: offsetY, lng: offsetX }, // Koordinat disimpan sebagai { lat: y, lng: x }
+      coordinates: { lat: offsetYPercent, lng: offsetXPercent },
     });
 
     setShowPin(true);
@@ -521,8 +528,6 @@ function AddressForm({ formData, setFormData, setIsFormValid }) {
             }}
             value={formData.name}
             onChange={handleChange}
-            error={!!errorMessages.name}
-            helperText={errorMessages.name}
           />
         </Grid>
         <Grid item xs={12} sm={6} sx={{ padding: "20px" }}>
@@ -552,8 +557,6 @@ function AddressForm({ formData, setFormData, setIsFormValid }) {
             }}
             value={formData.nik}
             onChange={handleNik}
-            error={!!errorMessages.nik}
-            helperText={errorMessages.nik}
           />
         </Grid>
         <Grid item xs={12} sm={6} sx={{ padding: "20px" }}>
@@ -749,7 +752,7 @@ function AddressForm({ formData, setFormData, setIsFormValid }) {
             color="primary"
             sx={{
               height: "10px",
-              width: "479px",
+              width: "468px",
 
               "& .MuiOutlinedInput-notchedOutline": {
                 borderRadius: "8px",
@@ -981,7 +984,7 @@ function AddressForm({ formData, setFormData, setIsFormValid }) {
                   size="small"
                   sx={{
                     height: "10px",
-                    width: "479px",
+                    width: "468px",
 
                     "& .MuiOutlinedInput-notchedOutline": {
                       borderRadius: "8px",
@@ -1199,8 +1202,8 @@ function AddressForm({ formData, setFormData, setIsFormValid }) {
                   <div
                     style={{
                       position: "absolute",
-                      left: `${clickedPosition.x}px`,
-                      top: `${clickedPosition.y}px`,
+                      left: `${clickedPosition.x}%`, // Konversi ke persen
+                      top: `${clickedPosition.y}%`, // Konversi ke persen
                       transform: "translate(-50%, -100%)", // Membuat pin muncul di atas titik klik
                     }}
                   >
@@ -1462,7 +1465,7 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
           style={{ paddingLeft: 50, paddingRight: 50 }}
         >
           <Grid item xs={12}>
-            <Typography variant="h6">Data Keluarga</Typography>
+            <Typography variant="h6">Istri</Typography>
           </Grid>
           <Grid item xs={12}>
             <TextField
@@ -1584,7 +1587,7 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
                   size="small"
                   sx={{
                     height: "10px",
-                    width: "479px",
+                    width: "468px",
 
                     "& .MuiOutlinedInput-notchedOutline": {
                       borderRadius: "8px",
@@ -1629,7 +1632,7 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
                     size="small"
                     sx={{
                       height: "10px",
-                      width: "479px",
+                      width: "468px",
 
                       "& .MuiOutlinedInput-notchedOutline": {
                         borderRadius: "8px",
@@ -1700,7 +1703,7 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
             style={{ paddingLeft: 50, paddingRight: 50, paddingTop: 25 }}
           >
             <Grid item xs={12}>
-              <Typography variant="h6">Data Keluarga</Typography>
+              <Typography variant="h6">Data Istri</Typography>
             </Grid>
             <Grid item xs={12} sx={{ padding: "20px" }}>
               <TextField
@@ -1744,16 +1747,14 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
             {[...Array(jumlahIstri)].map((_, index) => (
               <React.Fragment key={index}>
                 <Grid item xs={12} sx={{ paddingTop: "20px" }}>
-                  <Typography variant="h6">
-                    Data diri Istri {index + 1}
-                  </Typography>
+                  <Typography variant="h6">Data diri Istri</Typography>
                 </Grid>
                 <Grid item xs={12} sm={6} sx={{ padding: "20px" }}>
                   <TextField
                     required
                     id={`namaIstri${index + 1}`}
                     name={`namaIstri${index + 1}`}
-                    label={`Nama Istri ${index + 1}`}
+                    label={`Nama`}
                     autoComplete="given-name"
                     variant="outlined"
                     size="small"
@@ -1783,7 +1784,7 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
                     required
                     id={`nikIstri${index + 1}`}
                     name={`nikIstri${index + 1}`}
-                    label={`NIK Istri ${index + 1}`}
+                    label={`NIK`}
                     variant="outlined"
                     size="small"
                     sx={{
@@ -1818,12 +1819,12 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
                     select
                     id={`samaDenganSuami${index + 1}`}
                     name={`samaDenganSuami${index + 1}`}
-                    label={`Alamat istri ${index + 1}`}
+                    label={`Alamat`}
                     variant="outlined"
                     size="small"
                     sx={{
                       height: "10px",
-                      width: "479px",
+                      width: "468px",
 
                       "& .MuiOutlinedInput-notchedOutline": {
                         borderRadius: "8px",
@@ -1862,13 +1863,13 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
                       required
                       id={`alamatIstri${index + 1}`}
                       name={`alamatIstri${index + 1}`}
-                      label={`Alamat Istri ${index + 1}`}
+                      label={`Alamat`}
                       autoComplete="street-address"
                       variant="outlined"
                       size="small"
                       sx={{
                         height: "10px",
-                        width: "479px",
+                        width: "468px",
 
                         "& .MuiOutlinedInput-notchedOutline": {
                           borderRadius: "8px",
@@ -1896,7 +1897,7 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
                     select
                     id={`statusktpIstri${index + 1}`}
                     name={`statusktpIstri${index + 1}`}
-                    label={`KTP Istri ${index + 1}`}
+                    label={`KTP`}
                     autoComplete="given-name"
                     variant="outlined"
                     size="small"
@@ -1928,7 +1929,10 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
                 </Grid>
               </React.Fragment>
             ))}
-
+            <Grid item xs={12}>
+              <Typography variant="h6">Anak</Typography>
+            </Grid>
+            <Grid item xs={12}></Grid>
             <Grid item xs={12} sx={{ padding: "20px" }}>
               <TextField
                 id="jumlahAnak"
@@ -1985,7 +1989,7 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
 
                     <Grid item xs={12} sm={6} sx={{ padding: "20px" }}>
                       <TextField
-                        label={`Nama Anak ${index + 1}`}
+                        label={`Nama`}
                         name={`namaAnak${index + 1}`}
                         variant="outlined"
                         size="small"
@@ -2015,7 +2019,7 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
                         required
                         id={`nikAnak${index + 1}`}
                         name={`nikAnak${index + 1}`}
-                        label={`NIK Anak ${index + 1}`}
+                        label={`NIK`}
                         variant="outlined"
                         size="small"
                         sx={{
@@ -2048,7 +2052,7 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
                     </Grid>
                     <Grid item xs={12} sm={6} sx={{ padding: "20px" }}>
                       <TextField
-                        label={`Usia Anak ${index + 1}`}
+                        label={`Usia`}
                         name={`usiaAnak${index + 1}`}
                         type="number"
                         variant="outlined"
@@ -2084,12 +2088,12 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
                             select
                             id={`samaDenganAyah${index + 1}`}
                             name={`samaDenganAyah${index + 1}`}
-                            label={`Alamat Anak ${index + 1}`}
+                            label={`Alamat`}
                             variant="outlined"
                             size="small"
                             sx={{
                               height: "10px",
-                              width: "479px",
+                              width: "468px",
 
                               "& .MuiOutlinedInput-notchedOutline": {
                                 borderRadius: "8px",
@@ -2132,13 +2136,13 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
                               required
                               id={`alamatAnak${index + 1}`}
                               name={`alamatAnak${index + 1}`}
-                              label={`Alamat Anak ${index + 1}`}
+                              label={`Alamat`}
                               autoComplete="street-address"
                               variant="outlined"
                               size="small"
                               sx={{
                                 height: "10px",
-                                width: "479px",
+                                width: "468px",
 
                                 "& .MuiOutlinedInput-notchedOutline": {
                                   borderRadius: "8px",
@@ -2168,7 +2172,7 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
                             select
                             id={`statusktpAnak${index + 1}`}
                             name={`statusktpAnak${index + 1}`}
-                            label={`KTP Anak ${index + 1}`}
+                            label={`KTP`}
                             autoComplete="given-name"
                             variant="outlined"
                             size="small"
@@ -2207,12 +2211,12 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
                             select
                             id={`statusAnak${index + 1}`}
                             name={`statusAnak${index + 1}`}
-                            label={`Status Anak ${index + 1}`}
+                            label={`Status`}
                             variant="outlined"
                             size="small"
                             sx={{
                               height: "10px",
-                              width: "479px",
+                              width: "468px",
 
                               "& .MuiOutlinedInput-notchedOutline": {
                                 borderRadius: "8px",

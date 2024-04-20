@@ -1,42 +1,29 @@
 import React, { useState, useEffect } from "react";
 import "./maps.css";
-import "leaflet/dist/leaflet.css";
-import { MapContainer, TileLayer, Marker, Polygon } from "react-leaflet";
-import MarkerClusterGroup from "react-leaflet-cluster";
-import { Icon, divIcon, point } from "leaflet";
 import axios from "axios";
 import TombolTambahSurat from "../Components/Surat/TombolTambahSurat";
 import TombolTambahWarga from "../Components/Maps/TombolTambahWarga.jsx";
+import SideBar from "../Components/sideBar/SideBar.jsx";
 import TombolLogout from "../Components/Logout/tombolLogout";
 import { Button, InputAdornment, TextField } from "@mui/material";
-import SideBar from "../Components/sideBar/SideBar.jsx";
 import SearchIcon from "@mui/icons-material/Search";
-import maps from "../icons/Map.jpg"
-import { ImageOverlay } from 'react-leaflet';
-
-const customIcon = new Icon({
-  iconUrl: require("../icons/placeholder.png"),
-  iconSize: [38, 38],
-});
-
-const imageBounds = [[-7.005964, 107.635655], [-7.00476, 107.63795]];
-
-const createClusterCustomIcon = function (cluster) {
-  return new divIcon({
-    html: `<span class="cluster-icon">${cluster.getChildCount()}</span>`,
-    className: "custom-marker-cluster",
-    iconSize: point(33, 33, true),
-  });
-};
+import background from "../icons/maps2.png";
+import markerIcon from "../icons/placeholder.png"
 
 const Maps = () => {
   const [data, setData] = useState([]);
   const [surat, setSurat] = useState([]);
-  const [multiPolygon, setMultiPolygon] = useState([]);
-  const purpleOptions = { color: "purple" };
-  const [selectedMarkerData, setSelectedMarkerData] = useState(null);
   const [searchInput, setSearchInput] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+  const [selectedMarkerData, setSelectedMarkerData] = useState(null);
+
+  const handleMarkerClick = (item) => {
+    setSelectedMarkerData(item);
+  };
+
+  const handleSidebarClose = () => {
+    setSelectedMarkerData(null);
+  };
 
   const handleSearchInputChange = (event) => {
     setSearchInput(event.target.value);
@@ -53,14 +40,6 @@ const Maps = () => {
     }
   };
 
-  const handleMarkerClick = (item) => {
-    setSelectedMarkerData(item);
-  };
-
-  const handleSidebarClose = () => {
-    setSelectedMarkerData(null);
-  };
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -74,21 +53,6 @@ const Maps = () => {
     };
 
     fetchData();
-  }, []);
-
-  useEffect(() => {
-    const fetchMultiPolygon = async () => {
-      try {
-        const response = await axios.get(
-          "http://127.0.0.1:5000/get_multipolygon"
-        );
-        setMultiPolygon(response.data.multiPolygon);
-      } catch (error) {
-        console.error("Error fetching multiPolygon:", error);
-      }
-    };
-
-    fetchMultiPolygon();
   }, []);
 
   const handleDelete = async (name) => {
@@ -147,7 +111,7 @@ const Maps = () => {
   return (
     <div className="app-container">
       <div className="sidebar-container">
-        <SideBar
+      <SideBar
           selectedMarkerData={selectedMarkerData}
           surat={surat}
           onClose={handleSidebarClose}
@@ -161,7 +125,7 @@ const Maps = () => {
           variant="outlined"
           value={searchInput}
           onChange={handleSearchInputChange}
-          onKeyDown={handleKeyDown} // Add this line to handle key events
+          onKeyDown={handleKeyDown}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
@@ -180,43 +144,59 @@ const Maps = () => {
         <TombolTambahWarga />
         <TombolTambahSurat />
 
-        <MapContainer center={[-7.0053677, 107.6368018]} zoom={20} maxZoom={22} scrollWheelZoom={false} dragging={false}>
-    {/* Tambahkan ImageOverlay sebagai gambar latar belakang */}
-    <ImageOverlay url={maps} bounds={imageBounds} zIndex={10} />
+        <div className="image-container">
+          <img
+            src={background}
+            className="custom-map-image"
+            style={{ height: "100%", width: "100%", objectFit: "cover" }}
+            alt="Map"
+            />
+          {searchResults.length > 0
+  ? searchResults.map((item) => {
+      const left = item.coordinates ? `${item.coordinates.lng}%` : 0;
+      const top = item.coordinates ? `${item.coordinates.lat}%` : 0;
+      
+      console.log('Left:', left); // Tampilkan nilai left di konsol
+      console.log('Top:', top);
 
-    {/* Tambahkan marker di atas gambar menggunakan koordinat pada gambar */}
-    <MarkerClusterGroup
-            chunkedLoading
-            iconCreateFunction={createClusterCustomIcon}
-          >
-            {searchResults.length > 0
-              ? searchResults.map((item) => (
-                  <Marker
-                    key={item._id}
-                    position={
-                      item.coordinates
-                        ? [item.coordinates.lat, item.coordinates.lng]
-                        : [0, 0]
-                    }
-                    icon={customIcon}
-                    eventHandlers={{ click: () => handleMarkerClick(item) }}
-                  ></Marker>
-                ))
-              : data.map((item) => (
-                  <Marker
-                    key={item._id}
-                    position={
-                      item.coordinates
-                        ? [item.coordinates.lat, item.coordinates.lng]
-                        : [0, 0]
-                    }
-                    icon={customIcon}
-                    eventHandlers={{ click: () => handleMarkerClick(item) }}
-                  ></Marker>
-                ))}
-          </MarkerClusterGroup>
-  </MapContainer>
+      return (
+        <div
+          key={item._id}
+          className="custom-marker"
+          style={{ left: `${item.coordinates.lng}%`, top: `${item.coordinates.lat}%`, transform: "translate(-50%, -100%) ",}}
+          onClick={() => handleMarkerClick(item)}
+        >
+          <img
+            src={markerIcon}
+            alt="Marker Icon"
+            className="custom-marker-icon"
+          />
+        </div>
+      );
+    })
+  : data.map((item) => {
+      const left = item.coordinates ? `${item.coordinates.lng}%` : 0;
+      const top = item.coordinates ? `${item.coordinates.lat}%` : 0;
 
+      console.log('Left:', left); // Tampilkan nilai left di konsol
+      console.log('Top:', top);
+
+      return (
+        <div
+          key={item._id}
+          className="custom-marker"
+          style={{ left: `${item.coordinates.lng}%`, top: `${item.coordinates.lat}%`, transform: "translate(-50%, -100%)",}}
+          onClick={() => handleMarkerClick(item)}
+        >
+          <img
+            src={markerIcon}
+            alt="Marker Icon"
+            className="custom-marker-icon"
+          />
+        </div>
+      );
+    })}
+        </div>
       </div>
     </div>
   );
