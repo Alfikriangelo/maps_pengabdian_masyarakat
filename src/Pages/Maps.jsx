@@ -136,6 +136,9 @@ const Maps = () => {
               </InputAdornment>
             ),
           }}
+          InputLabelProps={{
+            shrink: !!searchInput, // Mengatur shrink ke true jika ada nilai dalam searchInput
+          }}
         />
       </div>
 
@@ -147,8 +150,7 @@ const Maps = () => {
         <div className="image-container">
           <img
             src={background}
-            className="custom-map-image"
-            style={{ height: "100%", width: "100%", objectFit: "cover" }}
+            style={{ height: "100vh", width: "100%", objectFit: "cover" }} // ubah tinggi menjadi 80vh
             alt="Map"
           />
           {searchResults.length > 0
@@ -165,7 +167,7 @@ const Maps = () => {
                     className="custom-marker"
                     style={{
                       left: `${item.coordinates.lng}%`,
-                      top: `${item.coordinates.lat}%`,
+                      top: `calc(${item.coordinates.lat}% + 20%)`, // ubah menjadi 20%
                       transform: "translate(-50%, -100%) ",
                       zoom: 2,
                     }}
@@ -192,7 +194,7 @@ const Maps = () => {
                     className="custom-marker"
                     style={{
                       left: `${item.coordinates.lng}% `,
-                      top: `calc(${item.coordinates.lat}% + 23%)`,
+                      top: `calc(${item.coordinates.lat}% + 20%)`, // ubah menjadi 20%
                       transform: "translate(-50%, -100%)",
                     }}
                     onClick={() => handleMarkerClick(item)}

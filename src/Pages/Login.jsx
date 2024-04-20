@@ -144,9 +144,9 @@ const Login = () => {
                 fullWidth
                 variant="contained"
                 onClick={handleLogin}
-                sx={{ mt: 3, mb: 2 }}
+                sx={{ mt: 3, mb: 2, textTransform: "none" }}
               >
-                MASUK
+                Masuk
               </Button>
               {error && (
                 <Typography variant="body2" color="error" sx={{ mt: 1 }}>

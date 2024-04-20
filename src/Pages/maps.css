@@ -32,7 +32,7 @@
 }
 .sidebar-container {
   position: absolute;
-  top: 0px;
+  top: -9vh;
   left: 0px;
   z-index: 2000;
   background-color: white;

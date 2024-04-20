@@ -306,54 +306,19 @@ const SideBar = ({ isOpen, selectedMarkerData, surat, onClose, hapus }) => {
               <span className="nama">Foto KK</span>
             </div>
             <div>
-              {Array.isArray(selectedMarkerData.statusKK) ? (
-                selectedMarkerData.statusKK.map((kk, index) => (
-                  <div key={index} className="warga-name-container">
-                    {kk}
-                  </div>
-                ))
-              ) : (
-                <span className="warga-name">Belum ada foto KK</span>
-              )}
+              <span>{selectedMarkerData.KK}</span>
             </div>
             <hr className="container-line" />
           </div>
-          {/* <Button
-            style={{ width: 'calc(100% - 20px)', margin: '5px 5px 5px 10px', textAlign: 'center', textTransform: 'none' }}
-            className='update'
-            variant="outlined"
-            color='primary'
-            onClick={handleTambahAnakClick}
-          >
-            Tambah Anak
-          </Button> */}
-
-          {/* <Button
-            style={{
-              width: "calc(100% - 20px)",
-              margin: "5px 5px 5px 10px",
-              textAlign: "center",
-              textTransform: "none",
-            }}
-            className="delete"
-            variant="contained"
-            color="error"
-            onClick={() => {
-              hapus(selectedMarkerData.name);
-              onClose();
-            }}
-          >
-            Hapus
-          </Button> */}
           <Button
-            style={{
+            sx={{
               width: "calc(100% - 20px)",
-              margin: "5px 5px 5px 10px",
               textAlign: "center",
               textTransform: "none",
               display: "flex", // Menjadikan tata letak flex
               justifyContent: "center", // Penempatan horizontal ke tengah
               alignItems: "center", // Penempatan vertikal ke tengah
+              mx: 1.5,
             }}
             className="delete"
             variant="contained"
