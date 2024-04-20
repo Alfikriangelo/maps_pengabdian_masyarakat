@@ -415,7 +415,6 @@ def login():
     username = data.get('name')
     password = data.get('password')
 
-    # Bandingkan data dengan input pengguna
     if username == 'admin' and password == 'admin':
         user_data = {'name': 'admin', 'email': 'admin@example.com'}
         return jsonify(user_data)
