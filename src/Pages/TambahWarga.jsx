@@ -16,7 +16,7 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { useNavigate } from "react-router-dom";
 import { faMapMarker } from "@fortawesome/free-solid-svg-icons";
 import "./TambahWarga.css";
-import maps1 from "../icons/maps2.png";
+import maps1 from "../icons/maps3.png";
 import pin from "../icons/placeholder.png";
 
 library.add(faMapMarker);
@@ -189,7 +189,7 @@ export default function TambahWarga({
               component="h1"
               variant="h4"
               align="center"
-              sx={{ my: 4, paddingBottom: "20px" }}
+              sx={{ my: 4, paddingBottom: "25px" }}
             >
               Form Tambah Warga
             </Typography>
@@ -301,7 +301,7 @@ function AddressForm({ formData, setFormData, setIsFormValid }) {
     }
 
     if (!isValid) {
-      errorMessagesCopy[name] = `Huruf awal merupakan huruf besar`;
+      errorMessagesCopy[name] = `Diawali huruf kapital`;
     } else {
       errorMessagesCopy[name] = ""; // Bersihkan pesan kesalahan jika valid
     }
@@ -413,6 +413,41 @@ function AddressForm({ formData, setFormData, setIsFormValid }) {
     });
   };
 
+  const handleNik = (e) => {
+    const { name, value, files } = e.target;
+
+    let isValid = true;
+    let errorMessagesCopy = { ...errorMessages };
+
+    const validationRules = {
+      nik: (value) => !isNaN(Number(value)) && value.length === 16,
+    };
+
+    if (name in validationRules) {
+      if (typeof validationRules[name] === "function") {
+        isValid = validationRules[name](value);
+      } else {
+        isValid = validationRules[name].test(value);
+      }
+    }
+
+    if (!isValid) {
+      errorMessagesCopy[name] = `Harus angka dan 16 digit`;
+    } else {
+      errorMessagesCopy[name] = "";
+    }
+
+    setErrorMessages(errorMessagesCopy);
+    setIsFormValid(
+      Object.values(errorMessagesCopy).every((message) => !message)
+    );
+
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: name === "image" ? files[0] : value,
+    }));
+  };
+
   const [showPin, setShowPin] = useState(false);
   const [clickedPosition, setClickedPosition] = useState({ x: 0, y: 0 });
 
@@ -465,7 +500,7 @@ function AddressForm({ formData, setFormData, setIsFormValid }) {
         <Grid item xs={12}>
           <Typography variant="h6">Data Diri</Typography>
         </Grid>
-        <Grid item xs={12} sm={6} sx={{ padding: "20px" }}>
+        <Grid item xs={12} sm={6} sx={{ padding: "25px" }}>
           <TextField
             id="name"
             name="name"
@@ -492,9 +527,11 @@ function AddressForm({ formData, setFormData, setIsFormValid }) {
             }}
             value={formData.name}
             onChange={handleChange}
+            error={!!errorMessages.name}
+            helperText={errorMessages.name}
           />
         </Grid>
-        <Grid item xs={12} sm={6} sx={{ padding: "20px" }}>
+        <Grid item xs={12} sm={6} sx={{ padding: "25px" }}>
           <TextField
             id="nik"
             name="nik"
@@ -520,10 +557,12 @@ function AddressForm({ formData, setFormData, setIsFormValid }) {
               },
             }}
             value={formData.nik}
-            onChange={handleChange}
+            onChange={handleNik}
+            error={!!errorMessages.nik}
+            helperText={errorMessages.nik}
           />
         </Grid>
-        <Grid item xs={12} sm={6} sx={{ padding: "20px" }}>
+        <Grid item xs={12} sm={6} sx={{ padding: "25px" }}>
           <TextField
             required
             id="ttl"
@@ -552,7 +591,7 @@ function AddressForm({ formData, setFormData, setIsFormValid }) {
             onChange={handleChange}
           />
         </Grid>
-        <Grid item xs={12} sm={6} sx={{ padding: "20px" }}>
+        <Grid item xs={12} sm={6} sx={{ padding: "25px" }}>
           <TextField
             required
             id="job"
@@ -581,7 +620,7 @@ function AddressForm({ formData, setFormData, setIsFormValid }) {
             onChange={handleChange}
           />
         </Grid>
-        <Grid item xs={12} sm={6} sx={{ padding: "20px" }}>
+        <Grid item xs={12} sm={6} sx={{ padding: "25px" }}>
           <TextField
             required
             id="lastEdu"
@@ -610,7 +649,7 @@ function AddressForm({ formData, setFormData, setIsFormValid }) {
             onChange={handleChange}
           />
         </Grid>
-        <Grid item xs={12} sm={6} sx={{ padding: "20px" }}>
+        <Grid item xs={12} sm={6} sx={{ padding: "25px" }}>
           <TextField
             id="taxNumber"
             name="taxNumber"
@@ -638,7 +677,7 @@ function AddressForm({ formData, setFormData, setIsFormValid }) {
             onChange={handleChange}
           />
         </Grid>
-        <Grid item xs={12} sm={6} sx={{ padding: "20px" }}>
+        <Grid item xs={12} sm={6} sx={{ padding: "25px" }}>
           <TextField
             id="bpjsNumber"
             name="bpjsNumber"
@@ -666,7 +705,7 @@ function AddressForm({ formData, setFormData, setIsFormValid }) {
             onChange={handleChange}
           />
         </Grid>
-        <Grid item xs={12} sm={6} sx={{ padding: "20px" }}>
+        <Grid item xs={12} sm={6} sx={{ padding: "25px" }}>
           <TextField
             select
             id="status"
@@ -705,7 +744,7 @@ function AddressForm({ formData, setFormData, setIsFormValid }) {
         <Grid item xs={12}>
           <Typography variant="h6">Alamat</Typography>
         </Grid>
-        <Grid item xs={12} sx={{ padding: "20px" }}>
+        <Grid item xs={12} sx={{ padding: "25px" }}>
           <TextField
             id="address"
             name="address"
@@ -735,7 +774,7 @@ function AddressForm({ formData, setFormData, setIsFormValid }) {
             onChange={handleChange}
           />
         </Grid>
-        <Grid item xs={12} sm={6} sx={{ padding: "20px" }}>
+        <Grid item xs={12} sm={6} sx={{ padding: "25px" }}>
           <TextField
             required
             id="blok"
@@ -764,7 +803,7 @@ function AddressForm({ formData, setFormData, setIsFormValid }) {
             onChange={handleChange}
           />
         </Grid>
-        <Grid item xs={12} sm={6} sx={{ padding: "20px" }}>
+        <Grid item xs={12} sm={6} sx={{ padding: "25px" }}>
           <TextField
             required
             id="no"
@@ -796,7 +835,7 @@ function AddressForm({ formData, setFormData, setIsFormValid }) {
         <Grid item xs={12}>
           <Typography variant="h6">Kendaraan</Typography>
         </Grid>
-        <Grid item xs={12} sx={{ padding: "20px" }}>
+        <Grid item xs={12} sx={{ padding: "25px" }}>
           <TextField
             id="numberOfVehicles"
             name="numberOfVehicles"
@@ -839,7 +878,7 @@ function AddressForm({ formData, setFormData, setIsFormValid }) {
                 key={index}
                 style={{ marginLeft: "1px", marginTop: "0.5px" }}
               >
-                <Grid item xs={12} sm={6} sx={{ padding: "20px" }}>
+                <Grid item xs={12} sm={6} sx={{ padding: "25px" }}>
                   <TextField
                     id={`vehicleType${index}`}
                     name={`vehicleType${index}`}
@@ -867,7 +906,7 @@ function AddressForm({ formData, setFormData, setIsFormValid }) {
                     onChange={(e) => handleChange(e, `vehicleType${index}`)}
                   />
                 </Grid>
-                <Grid item xs={12} sm={6} sx={{ padding: "20px" }}>
+                <Grid item xs={12} sm={6} sx={{ padding: "25px" }}>
                   <TextField
                     id={`vehicleNumber${index}`}
                     name={`vehicleNumber${index}`}
@@ -902,7 +941,7 @@ function AddressForm({ formData, setFormData, setIsFormValid }) {
         <Grid item xs={12}>
           <Typography variant="h6">Keterangan Tambahan</Typography>
         </Grid>
-        <Grid item xs={12} sx={{ padding: "20px" }}>
+        <Grid item xs={12} sx={{ padding: "25px" }}>
           <TextField
             id="numberOfComments"
             name="numberOfComments"
@@ -939,7 +978,7 @@ function AddressForm({ formData, setFormData, setIsFormValid }) {
         {formData.numberOfComments > 0 && (
           <React.Fragment>
             {[...Array(formData.numberOfComments)].map((_, index) => (
-              <Grid item xs={12} key={index} sx={{ padding: "20px" }}>
+              <Grid item xs={12} key={index} sx={{ padding: "25px" }}>
                 <TextField
                   id={`additionalComment${index}`}
                   name={`additionalComment${index}`}
@@ -973,7 +1012,7 @@ function AddressForm({ formData, setFormData, setIsFormValid }) {
         <Grid item xs={12}>
           <Typography variant="h6">Kelengkapan Berkas</Typography>
         </Grid>
-        <Grid item xs={12} sm={6} sx={{ padding: "20px" }}>
+        <Grid item xs={12} sm={6} sx={{ padding: "25px" }}>
           <TextField
             select
             id="statusKTP"
@@ -1008,7 +1047,7 @@ function AddressForm({ formData, setFormData, setIsFormValid }) {
           </TextField>
         </Grid>
 
-        <Grid item xs={12} sm={6} sx={{ padding: "20px" }}>
+        <Grid item xs={12} sm={6} sx={{ padding: "25px" }}>
           <TextField
             select
             id="statusKK"
@@ -1113,7 +1152,7 @@ function AddressForm({ formData, setFormData, setIsFormValid }) {
           item
           xs={12}
           style={{ textAlign: "left" }}
-          sx={{ padding: "20px" }}
+          sx={{ padding: "25px" }}
         >
           <label htmlFor="fotoDiri">
             <MuiTypography>Foto Diri</MuiTypography>
@@ -1148,7 +1187,7 @@ function AddressForm({ formData, setFormData, setIsFormValid }) {
         </Grid>
 
         <Grid container spacing={2}>
-          <Grid item xs={12} sx={{ padding: "20px" }}>
+          <Grid item xs={12} sx={{ padding: "25px" }}>
             <Typography>Tentukan Pinpoint Rumah</Typography>
             {/* Menampilkan foto dan menambahkan event onClick */}
             <div
@@ -1157,7 +1196,7 @@ function AddressForm({ formData, setFormData, setIsFormValid }) {
               <img
                 src={maps1}
                 onClick={handleImageClick}
-                style={{ width: "100%", height: "auto" }} // Sesuaikan gaya sesuai kebutuhan
+                style={{ width: "100%", height: "auto", borderRadius: "8px"}} // Sesuaikan gaya sesuai kebutuhan
               />
               {/* Menampilkan ikon pin */}
               {showPin &&
@@ -1174,7 +1213,7 @@ function AddressForm({ formData, setFormData, setIsFormValid }) {
                     <img
                       src={pin}
                       alt="Icon Pin"
-                      style={{ width: "32px", height: "auto" }}
+                      style={{ width: "23px", height: "auto" }}
                     />
                   </div>
                 )}
@@ -1217,7 +1256,7 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
     }
 
     if (!isValid) {
-      errorMessagesCopy[name] = `Huruf awal merupakan huruf besar`;
+      errorMessagesCopy[name] = `*Diawali huruf kapital`;
     } else {
       errorMessagesCopy[name] = ""; // Bersihkan pesan kesalahan jika valid
     }
@@ -1471,12 +1510,12 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
           </Grid>
           {[...Array(jumlahIstri)].map((_, index) => (
             <React.Fragment key={index}>
-              <Grid item xs={12} sx={{ paddingTop: "20px" }}>
+              <Grid item xs={12} sx={{ paddingTop: "25px" }}>
                 <Typography variant="h6">
                   Data diri Istri {index + 1}
                 </Typography>
               </Grid>
-              <Grid item xs={12} sm={6} sx={{ paddingY: "20px" }}>
+              <Grid item xs={12} sm={6} sx={{ paddingY: "25px" }}>
                 <TextField
                   required
                   id={`namaIstri${index + 1}`}
@@ -1504,9 +1543,11 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
                   }}
                   value={formData[`namaIstri${index + 1}`]}
                   onChange={handleChange}
+                  error={!!errorMessages[`namaIstri${index + 1}`]}
+            helperText={errorMessages[`namaIstri${index + 1}`]}
                 />
               </Grid>
-              <Grid item xs={12} sm={6} sx={{ paddingY: "20px" }}>
+              <Grid item xs={12} sm={6} sx={{ paddingY: "25px" }}>
                 <TextField
                   required
                   id={`nikIstri${index + 1}`}
@@ -1532,11 +1573,13 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
                     },
                   }}
                   value={formData[`nikIstri${index + 1}`]}
-                  onChange={handleChange}
+                  onChange={handleNik}
+                        error={!!errorMessages[`nikIstri${index + 1}`]}
+            helperText={errorMessages[`nikIstri${index + 1}`]}
                 />
               </Grid>
               {/* Tambahkan dropdown untuk memilih apakah alamat dan komplek sama dengan suami */}
-              <Grid item xs={12} sx={{ padding: "20px" }}>
+              <Grid item xs={12} sx={{ padding: "25px" }}>
                 <TextField
                   select
                   id={`samaDenganSuami${index + 1}`}
@@ -1579,7 +1622,7 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
                   <MenuItem value={true}>Sama dengan suami</MenuItem>
                 </TextField>
               </Grid>
-              <Grid item xs={12} sx={{ padding: "20px" }}>
+              <Grid item xs={12} sx={{ padding: "25px" }}>
                 {!formData[`samaDenganSuami${index + 1}`] && (
                   <TextField
                     required
@@ -1614,7 +1657,7 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
               <Grid item xs={12}>
                 <Typography variant="h6">Kelengkapan Berkas</Typography>
               </Grid>
-              <Grid item xs={12} sm={6} sx={{ padding: "20px" }}>
+              <Grid item xs={12} sm={6} sx={{ padding: "25px" }}>
                 <TextField
                   select
                   id={`statusktpIstri${index + 1}`}
@@ -1664,7 +1707,7 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
             <Grid item xs={12}>
               <Typography variant="h6">Data Istri</Typography>
             </Grid>
-            <Grid item xs={12} sx={{ padding: "20px" }}>
+            <Grid item xs={12} sx={{ padding: "25px" }}>
               <TextField
                 select
                 id="jumlahIstri"
@@ -1705,10 +1748,10 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
 
             {[...Array(jumlahIstri)].map((_, index) => (
               <React.Fragment key={index}>
-                <Grid item xs={12} sx={{ paddingTop: "20px" }}>
+                <Grid item xs={12} sx={{ paddingTop: "25px" }}>
                   <Typography variant="h6">Data diri Istri</Typography>
                 </Grid>
-                <Grid item xs={12} sm={6} sx={{ padding: "20px" }}>
+                <Grid item xs={12} sm={6} sx={{ padding: "25px" }}>
                   <TextField
                     required
                     id={`namaIstri${index + 1}`}
@@ -1736,9 +1779,11 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
                     }}
                     value={formData[`namaIstri${index + 1}`]}
                     onChange={handleChange}
+                    error={!!errorMessages[`namaIstri${index + 1}`]}
+            helperText={errorMessages[`namaIstri${index + 1}`]}
                   />
                 </Grid>
-                <Grid item xs={12} sm={6} sx={{ padding: "20px" }}>
+                <Grid item xs={12} sm={6} sx={{ padding: "25px" }}>
                   <TextField
                     required
                     id={`nikIstri${index + 1}`}
@@ -1764,11 +1809,13 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
                       },
                     }}
                     value={formData[`nikIstri${index + 1}`]}
-                    onChange={handleChange}
+                    onChange={handleNik}
+                        error={!!errorMessages[`nikIstri${index + 1}`]}
+            helperText={errorMessages[`nikIstri${index + 1}`]}
                   />
                 </Grid>
                 {/* Tambahkan dropdown untuk memilih apakah alamat dan komplek sama dengan suami */}
-                <Grid item xs={12} sx={{ padding: "20px" }}>
+                <Grid item xs={12} sx={{ padding: "25px" }}>
                   <TextField
                     select
                     id={`samaDenganSuami${index + 1}`}
@@ -1811,7 +1858,7 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
                     <MenuItem value={true}>Sama dengan suami</MenuItem>
                   </TextField>
                 </Grid>
-                <Grid item xs={12} sx={{ padding: "20px" }}>
+                <Grid item xs={12} sx={{ padding: "25px" }}>
                   {!formData[`samaDenganSuami${index + 1}`] && (
                     <TextField
                       required
@@ -1846,7 +1893,7 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
                 <Grid item xs={12}>
                   <Typography variant="h6">Kelengkapan Berkas</Typography>
                 </Grid>
-                <Grid item xs={12} sm={6} sx={{ padding: "20px" }}>
+                <Grid item xs={12} sm={6} sx={{ padding: "25px" }}>
                   <TextField
                     select
                     id={`statusktpIstri${index + 1}`}
@@ -1884,10 +1931,10 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
               </React.Fragment>
             ))}
             <Grid item xs={12}>
-              <Typography variant="h6">Anak</Typography>
+              <Typography variant="h6">Data Anak</Typography>
             </Grid>
             <Grid item xs={12}></Grid>
-            <Grid item xs={12} sx={{ padding: "20px" }}>
+            <Grid item xs={12} sx={{ padding: "25px" }}>
               <TextField
                 id="jumlahAnak"
                 name="jumlahAnak"
@@ -1941,7 +1988,7 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
                       </Typography>
                     </Grid>
 
-                    <Grid item xs={12} sm={6} sx={{ padding: "20px" }}>
+                    <Grid item xs={12} sm={6} sx={{ padding: "25px" }}>
                       <TextField
                         label={`Nama`}
                         name={`namaAnak${index + 1}`}
@@ -1966,9 +2013,11 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
                         }}
                         value={formData[`namaAnak${index + 1}`]}
                         onChange={handleChange}
+                        error={!!errorMessages[`namaAnak${index + 1}`]}
+            helperText={errorMessages[`namaAnak${index + 1}`]}
                       />
                     </Grid>
-                    <Grid item xs={12} sm={6} sx={{ padding: "20px" }}>
+                    <Grid item xs={12} sm={6} sx={{ padding: "25px" }}>
                       <TextField
                         required
                         id={`nikAnak${index + 1}`}
@@ -1994,10 +2043,12 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
                           },
                         }}
                         value={formData[`nikAnak${index + 1}`]}
-                        onChange={handleChange}
+                        onChange={handleNik}
+                        error={!!errorMessages[`nikAnak${index + 1}`]}
+            helperText={errorMessages[`nikAnak${index + 1}`]}
                       />
                     </Grid>
-                    <Grid item xs={12} sm={6} sx={{ padding: "20px" }}>
+                    <Grid item xs={12} sm={6} sx={{ padding: "25px" }}>
                       <TextField
                         label={`Usia`}
                         name={`usiaAnak${index + 1}`}
@@ -2030,7 +2081,7 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
 
                     {usiaAnak[`usiaAnak${index + 1}`] >= 17 && (
                       <React.Fragment>
-                        <Grid item xs={12} sx={{ padding: "20px" }}>
+                        <Grid item xs={12} sx={{ padding: "25px" }}>
                           <TextField
                             select
                             id={`samaDenganAyah${index + 1}`}
@@ -2077,7 +2128,7 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
                             <MenuItem value={true}>Sama dengan Ayah</MenuItem>
                           </TextField>
                         </Grid>
-                        <Grid item xs={12} sx={{ padding: "20px" }}>
+                        <Grid item xs={12} sx={{ padding: "25px" }}>
                           {!formData[`samaDenganAyah${index + 1}`] && (
                             <TextField
                               required
@@ -2114,7 +2165,7 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
                             Kelengkapan Berkas
                           </Typography>
                         </Grid>
-                        <Grid item xs={12} sm={6} sx={{ padding: "20px" }}>
+                        <Grid item xs={12} sm={6} sx={{ padding: "25px" }}>
                           <TextField
                             select
                             id={`statusktpAnak${index + 1}`}
@@ -2153,7 +2204,7 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
                             </MenuItem>
                           </TextField>
                         </Grid>
-                        <Grid item xs={12} sx={{ padding: "20px" }}>
+                        <Grid item xs={12} sx={{ padding: "25px" }}>
                           <TextField
                             select
                             id={`statusAnak${index + 1}`}

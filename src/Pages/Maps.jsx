@@ -7,7 +7,7 @@ import SideBar from "../Components/sideBar/SideBar.jsx";
 import TombolLogout from "../Components/Logout/tombolLogout";
 import { Button, InputAdornment, TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import background from "../icons/maps2.png";
+import background from "../icons/maps3.png";
 import markerIcon from "../icons/placeholder.png";
 
 const Maps = () => {
@@ -165,7 +165,7 @@ const Maps = () => {
                     className="custom-marker"
                     style={{
                       left: `${item.coordinates.lng}%`,
-                      top: `${item.coordinates.lat}%`,
+                      top: `calc(${item.coordinates.lat > 30 ? item.coordinates.lat + 30 : item.coordinates.lat}%)`,
                       transform: "translate(-50%, -100%) ",
                       zoom: 2,
                     }}
@@ -192,7 +192,7 @@ const Maps = () => {
                     className="custom-marker"
                     style={{
                       left: `${item.coordinates.lng}% `,
-                      top: `calc(${item.coordinates.lat}% + 23%)`,
+                      top: `calc(${item.coordinates.lat > 30 ? item.coordinates.lat + 30 : item.coordinates.lat}%)`,
                       transform: "translate(-50%, -100%)",
                     }}
                     onClick={() => handleMarkerClick(item)}
