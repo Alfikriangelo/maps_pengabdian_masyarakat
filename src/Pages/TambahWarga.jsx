@@ -412,42 +412,6 @@ function AddressForm({ formData, setFormData, setIsFormValid }) {
       }
     });
   };
-  // Fungsi untuk menambah istri ke dalam array
-
-  const handleNik = (e) => {
-    const { name, value, files } = e.target;
-
-    let isValid = true;
-    let errorMessagesCopy = { ...errorMessages };
-
-    const validationRules = {
-      nik: (value) => !isNaN(Number(value)) && value.length === 16,
-    };
-
-    if (name in validationRules) {
-      if (typeof validationRules[name] === "function") {
-        isValid = validationRules[name](value);
-      } else {
-        isValid = validationRules[name].test(value);
-      }
-    }
-
-    if (!isValid) {
-      errorMessagesCopy[name] = `Harus angka dan 16 digit`;
-    } else {
-      errorMessagesCopy[name] = "";
-    }
-
-    setErrorMessages(errorMessagesCopy);
-    setIsFormValid(
-      Object.values(errorMessagesCopy).every((message) => !message)
-    );
-
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: name === "image" ? files[0] : value,
-    }));
-  };
 
   const [showPin, setShowPin] = useState(false);
   const [clickedPosition, setClickedPosition] = useState({ x: 0, y: 0 });
@@ -556,7 +520,7 @@ function AddressForm({ formData, setFormData, setIsFormValid }) {
               },
             }}
             value={formData.nik}
-            onChange={handleNik}
+            onChange={handleChange}
           />
         </Grid>
         <Grid item xs={12} sm={6} sx={{ padding: "20px" }}>
@@ -1568,12 +1532,7 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
                     },
                   }}
                   value={formData[`nikIstri${index + 1}`]}
-                  onChange={(e) =>
-                    handleNik({
-                      ...e,
-                      name: e.target ? e.target.name : `nikIstri${index + 1}`,
-                    })
-                  }
+                  onChange={handleChange}
                 />
               </Grid>
               {/* Tambahkan dropdown untuk memilih apakah alamat dan komplek sama dengan suami */}
@@ -1805,12 +1764,7 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
                       },
                     }}
                     value={formData[`nikIstri${index + 1}`]}
-                    onChange={(e) =>
-                      handleNik({
-                        ...e,
-                        name: e.target ? e.target.name : `nikIstri${index + 1}`,
-                      })
-                    }
+                    onChange={handleChange}
                   />
                 </Grid>
                 {/* Tambahkan dropdown untuk memilih apakah alamat dan komplek sama dengan suami */}
@@ -2040,14 +1994,7 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
                           },
                         }}
                         value={formData[`nikAnak${index + 1}`]}
-                        onChange={(e) =>
-                          handleNik({
-                            ...e,
-                            name: e.target
-                              ? e.target.name
-                              : `nikAnak${index + 1}`,
-                          })
-                        }
+                        onChange={handleChange}
                       />
                     </Grid>
                     <Grid item xs={12} sm={6} sx={{ padding: "20px" }}>
