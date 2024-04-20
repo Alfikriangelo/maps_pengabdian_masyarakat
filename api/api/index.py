@@ -10,11 +10,11 @@ app = Flask(__name__)
 CORS(app)
 saved_file_data = {}
 
-# link fikri 'C:/Users/Lakuna/OneDrive/Documents/GitHub/tubes_pbo_maps/uploads'
+# link fikri 'C:/codingan/github pribadi/maps_pengabdian_masyarakat/uploads'
 # link darell 'C:/Users/ryand/Documents/GitHub/tubes_pbo_maps/uploads'
 # link awikawok 'C:/Users/Nab/Documents/GitHub/maps_pengabdian_masyarakat/uploads'
 
-UPLOAD_FOLDER = r'C:/Users/Nab/Documents/GitHub/maps_pengabdian_masyarakat/uploads'
+UPLOAD_FOLDER = r'C:/codingan/github pribadi/maps_pengabdian_masyarakat/uploads'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 

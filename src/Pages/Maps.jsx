@@ -8,7 +8,7 @@ import TombolLogout from "../Components/Logout/tombolLogout";
 import { Button, InputAdornment, TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import background from "../icons/maps2.png";
-import markerIcon from "../icons/placeholder.png"
+import markerIcon from "../icons/placeholder.png";
 
 const Maps = () => {
   const [data, setData] = useState([]);
@@ -111,7 +111,7 @@ const Maps = () => {
   return (
     <div className="app-container">
       <div className="sidebar-container">
-      <SideBar
+        <SideBar
           selectedMarkerData={selectedMarkerData}
           surat={surat}
           onClose={handleSidebarClose}
@@ -150,52 +150,61 @@ const Maps = () => {
             className="custom-map-image"
             style={{ height: "100%", width: "100%", objectFit: "cover" }}
             alt="Map"
-            />
+          />
           {searchResults.length > 0
-  ? searchResults.map((item) => {
-      const left = item.coordinates ? `${item.coordinates.lng}%` : 0;
-      const top = item.coordinates ? `${item.coordinates.lat}%` : 0;
-      
-      console.log('Left:', left); // Tampilkan nilai left di konsol
-      console.log('Top:', top);
+            ? searchResults.map((item) => {
+                const left = item.coordinates ? `${item.coordinates.lng}%` : 0;
+                const top = item.coordinates ? `${item.coordinates.lat}%` : 0;
 
-      return (
-        <div
-          key={item._id}
-          className="custom-marker"
-          style={{ left: `${item.coordinates.lng}%`, top: `${item.coordinates.lat}%`, transform: "translate(-50%, -100%) ",}}
-          onClick={() => handleMarkerClick(item)}
-        >
-          <img
-            src={markerIcon}
-            alt="Marker Icon"
-            className="custom-marker-icon"
-          />
-        </div>
-      );
-    })
-  : data.map((item) => {
-      const left = item.coordinates ? `${item.coordinates.lng}%` : 0;
-      const top = item.coordinates ? `${item.coordinates.lat}%` : 0;
+                console.log("Left:", left); // Tampilkan nilai left di konsol
+                console.log("Top:", top);
 
-      console.log('Left:', left); // Tampilkan nilai left di konsol
-      console.log('Top:', top);
+                return (
+                  <div
+                    key={item._id}
+                    className="custom-marker"
+                    style={{
+                      left: `${item.coordinates.lng}%`,
+                      top: `${item.coordinates.lat}%`,
+                      transform: "translate(-50%, -100%) ",
+                      zoom: 2,
+                    }}
+                    onClick={() => handleMarkerClick(item)}
+                  >
+                    <img
+                      src={markerIcon}
+                      alt="Marker Icon"
+                      className="custom-marker-icon"
+                    />
+                  </div>
+                );
+              })
+            : data.map((item) => {
+                const left = item.coordinates ? `${item.coordinates.lng}%` : 0;
+                const top = item.coordinates ? `${item.coordinates.lat}%` : 0;
 
-      return (
-        <div
-          key={item._id}
-          className="custom-marker"
-          style={{ left: `${item.coordinates.lng}%`, top: `${item.coordinates.lat}%`, transform: "translate(-50%, -100%)",}}
-          onClick={() => handleMarkerClick(item)}
-        >
-          <img
-            src={markerIcon}
-            alt="Marker Icon"
-            className="custom-marker-icon"
-          />
-        </div>
-      );
-    })}
+                console.log("Left:", left); // Tampilkan nilai left di konsol
+                console.log("Top:", top);
+
+                return (
+                  <div
+                    key={item._id}
+                    className="custom-marker"
+                    style={{
+                      left: `${item.coordinates.lng}% `,
+                      top: `calc(${item.coordinates.lat}% + 23%)`,
+                      transform: "translate(-50%, -100%)",
+                    }}
+                    onClick={() => handleMarkerClick(item)}
+                  >
+                    <img
+                      src={markerIcon}
+                      alt="Marker Icon"
+                      className="custom-marker-icon"
+                    />
+                  </div>
+                );
+              })}
         </div>
       </div>
     </div>
