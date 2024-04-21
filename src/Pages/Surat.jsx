@@ -48,7 +48,7 @@ const Surat = () => {
       padding: 10,
     };
 
-    const fileName = "surat_${nomorSurat}_${selectedName}.pdf";
+    const fileName = `surat_${nomorSurat}_${selectedName}.pdf`;
 
     // Kirim file name dan "nama" ke backend
     fetch("http://127.0.0.1:5000/save_file_name", {

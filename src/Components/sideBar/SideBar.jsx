@@ -24,7 +24,7 @@ const SideBar = ({ isOpen, selectedMarkerData, surat, onClose, hapus }) => {
       {selectedMarkerData && (
         <div
           className="container"
-          style={{ padding: 0, height: "91.42vh", position: "relative" }}
+          style={{ padding: 0, height: "100vh", position: "relative" }}
         >
           <button
             onClick={onClose}
