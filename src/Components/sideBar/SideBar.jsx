@@ -138,7 +138,7 @@ const SideBar = ({ isOpen, selectedMarkerData, surat, onClose, hapus }) => {
                   const nikAnak =
                     selectedMarkerData.nik.slice(startIdxAnak)[index]; // Mengambil NIK anak menggunakan slicing
                   const pekerjaanAnak =
-                    selectedMarkerData.statusAnak[index] || "Belum diketahui"; // Mendapatkan pekerjaan anak sesuai indeks atau default "Belum diketahui"
+                    selectedMarkerData.statusAnak[index] || "lajang"; // Mendapatkan pekerjaan anak sesuai indeks atau default "Belum diketahui"
                   const alamatAnak =
                     selectedMarkerData.address.slice(startIdxAnak)[index];
 
@@ -150,9 +150,11 @@ const SideBar = ({ isOpen, selectedMarkerData, surat, onClose, hapus }) => {
                         Status: {pekerjaanAnak}
                       </span>
                       <span className="alamat-anak">
-                        {alamatAnak === selectedMarkerData.address[0]
-                          ? "Alamat sama dengan Kepala Keluarga"
-                          : `Alamat: ${alamatAnak}`}
+                        {alamatAnak !== undefined
+                          ? alamatAnak === selectedMarkerData.address[0]
+                            ? "Alamat sama dengan Kepala Keluarga"
+                            : `Alamat: ${alamatAnak}`
+                          : "Alamat sama dengan Kepala Keluarga"}
                       </span>
                       {index !== selectedMarkerData.anak.length - 1 && <br />}
                     </div>

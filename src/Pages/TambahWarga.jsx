@@ -1473,7 +1473,7 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
           <Grid item xs={12}>
             <Typography variant="h6">Istri</Typography>
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} sx={{padding: "10px"}}>
             <TextField
               select
               id="jumlahIstri"
@@ -1515,7 +1515,7 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
             <React.Fragment key={index}>
               <Grid item xs={12} sx={{ paddingTop: "25px" }}>
                 <Typography variant="h6">
-                  Data diri Istri {index + 1}
+                  Data diri Istri
                 </Typography>
               </Grid>
               <Grid item xs={12} sm={6} sx={{ paddingY: "25px" }}>
@@ -1523,7 +1523,7 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
                   required
                   id={`namaIstri${index + 1}`}
                   name={`namaIstri${index + 1}`}
-                  label={`Nama Istri ${index + 1}`}
+                  label={`Nama Istri`}
                   autoComplete="given-name"
                   variant="outlined"
                   size="small"
@@ -1555,7 +1555,7 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
                   required
                   id={`nikIstri${index + 1}`}
                   name={`nikIstri${index + 1}`}
-                  label={`NIK Istri ${index + 1}`}
+                  label={`NIK Istri`}
                   variant="outlined"
                   size="small"
                   sx={{
@@ -1582,12 +1582,12 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
                 />
               </Grid>
               {/* Tambahkan dropdown untuk memilih apakah alamat dan komplek sama dengan suami */}
-              <Grid item xs={12} sx={{ padding: "25px" }}>
+              <Grid item xs={12} sx={{ padding: (theme) => formData[`samaDenganSuami${index + 1}`] ? "0px" : theme.spacing(3) }}>
                 <TextField
                   select
                   id={`samaDenganSuami${index + 1}`}
                   name={`samaDenganSuami${index + 1}`}
-                  label={`Alamat istri ${index + 1}`}
+                  label={`Alamat istri`}
                   variant="outlined"
                   size="small"
                   sx={{
@@ -1625,13 +1625,13 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
                   <MenuItem value={true}>Sama dengan suami</MenuItem>
                 </TextField>
               </Grid>
-              <Grid item xs={12} sx={{ padding: "25px" }}>
+              <Grid item xs={12} sx={{ padding: (theme) => formData[`samaDenganSuami${index + 1}`] ? "0px" : theme.spacing(3) }}>
                 {!formData[`samaDenganSuami${index + 1}`] && (
                   <TextField
                     required
                     id={`alamatIstri${index + 1}`}
                     name={`alamatIstri${index + 1}`}
-                    label={`Alamat Istri ${index + 1}`}
+                    label={`Alamat Istri`}
                     autoComplete="street-address"
                     variant="outlined"
                     size="small"
@@ -1665,7 +1665,7 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
                   select
                   id={`statusktpIstri${index + 1}`}
                   name={`statusktpIstri${index + 1}`}
-                  label={`KTP Istri ${index + 1}`}
+                  label={`KTP Istri`}
                   autoComplete="given-name"
                   variant="outlined"
                   size="small"
@@ -1818,7 +1818,7 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
                   />
                 </Grid>
                 {/* Tambahkan dropdown untuk memilih apakah alamat dan komplek sama dengan suami */}
-                <Grid item xs={12} sx={{ padding: "25px" }}>
+                <Grid item xs={12} sx={{ padding: (theme) => formData[`samaDenganSuami${index + 1}`] ? "0px" : theme.spacing(3) }}>
                   <TextField
                     select
                     id={`samaDenganSuami${index + 1}`}
@@ -1861,7 +1861,7 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
                     <MenuItem value={true}>Sama dengan suami</MenuItem>
                   </TextField>
                 </Grid>
-                <Grid item xs={12} sx={{ padding: "25px" }}>
+                <Grid item xs={12} sx={{ padding: (theme) => formData[`samaDenganSuami${index + 1}`] ? "0px" : theme.spacing(3) }}>
                   {!formData[`samaDenganSuami${index + 1}`] && (
                     <TextField
                       required
@@ -2084,7 +2084,7 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
 
                     {usiaAnak[`usiaAnak${index + 1}`] >= 17 && (
                       <React.Fragment>
-                        <Grid item xs={12} sx={{ padding: "25px" }}>
+                        <Grid item xs={12} sx={{ padding: (theme) => formData[`samaDenganAyah${index + 1}`] ? "0px" : theme.spacing(3) }}>
                           <TextField
                             select
                             id={`samaDenganAyah${index + 1}`}
@@ -2131,7 +2131,7 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
                             <MenuItem value={true}>Sama dengan Ayah</MenuItem>
                           </TextField>
                         </Grid>
-                        <Grid item xs={12} sx={{ padding: "25px" }}>
+                        <Grid item xs={12} sx={{ padding: (theme) => formData[`samaDenganAyah${index + 1}`] ? "0px" : theme.spacing(3) }}>
                           {!formData[`samaDenganAyah${index + 1}`] && (
                             <TextField
                               required
