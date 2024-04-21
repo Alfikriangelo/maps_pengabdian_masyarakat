@@ -156,7 +156,6 @@ export default function TambahWarga({
     <React.Fragment>
       <AppBar
         position="absolute"
-        color="default"
         elevation={0}
         sx={{
           position: "relative",
@@ -175,26 +174,24 @@ export default function TambahWarga({
           id="dataForm"
           onSubmit={handleSubmit}
           encType="multipart/form-data"
-          style={{ maxWidth: "650px", margin: "auto", alignItems: "center" }}
+          style={{ maxWidth: "650px", margin: "auto" }}
         >
           <Paper
             variant="outlined"
             sx={{
-              my: { xs: 3, md: 6 },
               p: { xs: 2, md: 3 },
-              borderRadius: 3,
             }}
           >
             <Typography
               component="h1"
               variant="h4"
               align="center"
+              fontWeight="bold"
               sx={{ my: 4, paddingBottom: "25px" }}
             >
-              Form Tambah Warga
+              Tambah Warga
             </Typography>
             {activeStep === steps.length ? (
-              // Jika kita sudah mencapai langkah terakhir, tampilkan pesan keberhasilan
               <React.Fragment>
                 <Typography variant="h5" textAlign="center" sx={{ my: 4 }}>
                   Pendaftaran Anda Berhasil!
@@ -1102,7 +1099,9 @@ function AddressForm({ formData, setFormData, setIsFormValid }) {
               component="span"
               startIcon={<CloudUploadIcon />}
             >
-              <MuiTypography>Masukkan Foto</MuiTypography>
+              <MuiTypography style={{ textTransform: "none" }}>
+                Masukkan Foto
+              </MuiTypography>
             </Button>
           </label>
           {formData.fotoHome && (
@@ -1134,7 +1133,9 @@ function AddressForm({ formData, setFormData, setIsFormValid }) {
               component="span"
               startIcon={<CloudUploadIcon />}
             >
-              <MuiTypography>Masukkan Foto</MuiTypography>
+              <MuiTypography style={{ textTransform: "none" }}>
+                Masukkan Foto
+              </MuiTypography>
             </Button>
           </label>
           {formData.fotoHome2 && (
@@ -1171,7 +1172,9 @@ function AddressForm({ formData, setFormData, setIsFormValid }) {
               component="span"
               startIcon={<CloudUploadIcon />}
             >
-              <MuiTypography>Masukkan Foto</MuiTypography>
+              <MuiTypography style={{ textTransform: "none" }}>
+                Masukkan Foto
+              </MuiTypography>
             </Button>
           </label>
           {formData.fotoDiri &&
@@ -1196,7 +1199,7 @@ function AddressForm({ formData, setFormData, setIsFormValid }) {
               <img
                 src={maps1}
                 onClick={handleImageClick}
-                style={{ width: "100%", height: "auto", borderRadius: "8px"}} // Sesuaikan gaya sesuai kebutuhan
+                style={{ width: "100%", height: "auto", borderRadius: "8px" }} // Sesuaikan gaya sesuai kebutuhan
               />
               {/* Menampilkan ikon pin */}
               {showPin &&
@@ -1544,7 +1547,7 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
                   value={formData[`namaIstri${index + 1}`]}
                   onChange={handleChange}
                   error={!!errorMessages[`namaIstri${index + 1}`]}
-            helperText={errorMessages[`namaIstri${index + 1}`]}
+                  helperText={errorMessages[`namaIstri${index + 1}`]}
                 />
               </Grid>
               <Grid item xs={12} sm={6} sx={{ paddingY: "25px" }}>
@@ -1574,8 +1577,8 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
                   }}
                   value={formData[`nikIstri${index + 1}`]}
                   onChange={handleNik}
-                        error={!!errorMessages[`nikIstri${index + 1}`]}
-            helperText={errorMessages[`nikIstri${index + 1}`]}
+                  error={!!errorMessages[`nikIstri${index + 1}`]}
+                  helperText={errorMessages[`nikIstri${index + 1}`]}
                 />
               </Grid>
               {/* Tambahkan dropdown untuk memilih apakah alamat dan komplek sama dengan suami */}
@@ -1780,7 +1783,7 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
                     value={formData[`namaIstri${index + 1}`]}
                     onChange={handleChange}
                     error={!!errorMessages[`namaIstri${index + 1}`]}
-            helperText={errorMessages[`namaIstri${index + 1}`]}
+                    helperText={errorMessages[`namaIstri${index + 1}`]}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6} sx={{ padding: "25px" }}>
@@ -1810,8 +1813,8 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
                     }}
                     value={formData[`nikIstri${index + 1}`]}
                     onChange={handleNik}
-                        error={!!errorMessages[`nikIstri${index + 1}`]}
-            helperText={errorMessages[`nikIstri${index + 1}`]}
+                    error={!!errorMessages[`nikIstri${index + 1}`]}
+                    helperText={errorMessages[`nikIstri${index + 1}`]}
                   />
                 </Grid>
                 {/* Tambahkan dropdown untuk memilih apakah alamat dan komplek sama dengan suami */}
@@ -2014,7 +2017,7 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
                         value={formData[`namaAnak${index + 1}`]}
                         onChange={handleChange}
                         error={!!errorMessages[`namaAnak${index + 1}`]}
-            helperText={errorMessages[`namaAnak${index + 1}`]}
+                        helperText={errorMessages[`namaAnak${index + 1}`]}
                       />
                     </Grid>
                     <Grid item xs={12} sm={6} sx={{ padding: "25px" }}>
@@ -2045,7 +2048,7 @@ function AddressForm2({ formData, setFormData, setIsFormValid }) {
                         value={formData[`nikAnak${index + 1}`]}
                         onChange={handleNik}
                         error={!!errorMessages[`nikAnak${index + 1}`]}
-            helperText={errorMessages[`nikAnak${index + 1}`]}
+                        helperText={errorMessages[`nikAnak${index + 1}`]}
                       />
                     </Grid>
                     <Grid item xs={12} sm={6} sx={{ padding: "25px" }}>
