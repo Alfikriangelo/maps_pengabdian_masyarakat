@@ -1,5 +1,4 @@
 from flask import Flask, request, jsonify, send_from_directory, current_app
-from pymongo import MongoClient 
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
 from datetime import datetime
@@ -11,10 +10,11 @@ app = Flask(__name__)
 CORS(app)
 saved_file_data = {}
 
-# link fikri 'C:/Users/Lakuna/OneDrive/Documents/GitHub/tubes_pbo_maps/uploads'
+# link fikri 'C:/codingan/github pribadi/maps_pengabdian_masyarakat/uploads'
 # link darell 'C:/Users/ryand/Documents/GitHub/tubes_pbo_maps/uploads'
+# link awikawok 'C:/Users/Nab/Documents/GitHub/maps_pengabdian_masyarakat/uploads'
 
-UPLOAD_FOLDER = r'C:/codingan/project/Maps_pengabdian_masyarakat/uploads'
+UPLOAD_FOLDER = r'C:/codingan/github pribadi/maps_pengabdian_masyarakat/uploads'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
@@ -34,11 +34,6 @@ def before_request():
 def hello_world():  
     return 'ye bisa'
 
-client = MongoClient("mongodb+srv://tes:tes@cluster1.tbcoubt.mongodb.net/?retryWrites=true&w=majority") 
-
-db = client['mydb'] 
-
-collection = db['pengguna'] 
 
 def ensure_upload_folder():
     if not os.path.exists(UPLOAD_FOLDER):
@@ -59,8 +54,6 @@ def handle_uploaded_file(file, data, key):
     return file_url
 
 def save_to_file(data):
-    kk = data.get("fotoKK", "")
-    full_path_kk = os.path.join(UPLOAD_FOLDER, kk).replace("\\", "/")
     home = data.get("fotoHome", "")
     full_path_home = os.path.join(UPLOAD_FOLDER, home).replace("\\", "/")
     home2 = data.get("fotoHome2", "")
@@ -79,7 +72,7 @@ def save_to_file(data):
         "pbb": data.get("taxNumber", ""),
         "bpjs": data.get("bpjsNumber", ""),
         "coordinates": data.get("coordinates", ""),
-        "fotoKK": full_path_kk,
+        "KK": data.get("statusKK", ""),
         "fotoHome": full_path_home,
         "fotoHome2": full_path_home2,
         "fotoDiri": full_path_diri,
@@ -88,9 +81,7 @@ def save_to_file(data):
         "statusAnak": [],
         "address": [],
         "nik": [],
-        "fotoKTP": [],
-        "image_url_KK": data.get("image_url_KK", []),
-        "image_url_KTP": data.get("image_url_KTP", []),
+        "statusKTP": [],
         "image_url_Home": data.get("image_url_Home", []),
         "image_url_Home2": data.get("image_url_Home2", []),
         "image_url_Diri": data.get("image_url_Diri", []),
@@ -98,9 +89,8 @@ def save_to_file(data):
 
     data_keluarga["nik"].append(data.get("nik", ""))
     data_keluarga["address"].append(data.get("address", ""))
-    ktp = data.get("fotoKTP", "")
-    full_path_ktp = os.path.join(UPLOAD_FOLDER, ktp).replace("\\", "/")
-    data_keluarga['fotoKTP'].append(full_path_ktp)
+    print(data.get("statusKTP", ""))
+    data_keluarga["statusKTP"].append(data.get("statusKTP", ""))
 
     i = 1
 
@@ -218,14 +208,12 @@ def save_to_file(data):
 
     i = 1
 
-    # Mengumpulkan foto KTP istri dari data
     while True:
-        key_ktp_istri = f"ktpIstri{i}"
-        ktp_istri = data.get(key_ktp_istri, "")
+        key_status_ktp_istri = f"statusktpIstri{i}"
+        status_ktp_istri = data.get(key_status_ktp_istri, "")
     
-        if ktp_istri:
-            full_path_ktp_istri = os.path.join(UPLOAD_FOLDER, ktp_istri).replace("\\", "/")
-            data_keluarga['fotoKTP'].append(full_path_ktp_istri)
+        if status_ktp_istri:
+            data_keluarga["statusKTP"].append(status_ktp_istri)
             i += 1
         else:
             break
@@ -234,12 +222,11 @@ def save_to_file(data):
 
     # Mengumpulkan foto KTP anak dari data
     while True:
-        key_ktp_anak = f"ktpAnak{i}"
-        ktp_anak = data.get(key_ktp_anak, "")
+        key_status_ktp_anak = f"statusktpAnak{i}"
+        status_ktp_anak = data.get(key_status_ktp_anak, "")
     
-        if ktp_anak:
-            full_path_ktp_anak = os.path.join(UPLOAD_FOLDER, ktp_anak).replace("\\", "/")
-            data_keluarga['fotoKTP'].append(full_path_ktp_anak)
+        if status_ktp_anak:
+            data_keluarga["statusKTP"].append(status_ktp_anak)
             i += 1
         else:
             break
@@ -257,8 +244,6 @@ def save_data():
         # Mengonversi koordinat dari JSON string ke objek Python
         data['coordinates'] = json.loads(data['coordinates'])
 
-        image_kk_urls = []
-        image_ktp_urls = []
         image_home_urls = []
         image_home2_urls = []
         image_diri_urls = []
@@ -270,11 +255,7 @@ def save_data():
                 # Menyimpan file dengan nama yang sesuai
                 file_url = handle_uploaded_file(file, data, file_key)
 
-                if file_key.startswith("fotoKK"):
-                    image_kk_urls.append(file_url)
-                elif file_key.startswith("fotoKTP") or file_key.startswith("ktpIstri") or file_key.startswith("ktpAnak"):
-                    image_ktp_urls.append(file_url)
-                elif file_key == "fotoHome":
+                if file_key == "fotoHome":
                     image_home_urls.append(file_url)
                 elif file_key == "fotoHome2":
                     image_home2_urls.append(file_url)
@@ -282,8 +263,6 @@ def save_data():
                     image_diri_urls.append(file_url)
 
         # Menambahkan URL ke data yang akan disimpan
-        data['image_url_KK'] = image_kk_urls
-        data['image_url_KTP'] = image_ktp_urls
         data['image_url_Home'] = image_home_urls
         data['image_url_Home2'] = image_home2_urls
         data['image_url_Diri'] = image_diri_urls
@@ -436,7 +415,6 @@ def login():
     username = data.get('name')
     password = data.get('password')
 
-    # Bandingkan data dengan input pengguna
     if username == 'admin' and password == 'admin':
         user_data = {'name': 'admin', 'email': 'admin@example.com'}
         return jsonify(user_data)

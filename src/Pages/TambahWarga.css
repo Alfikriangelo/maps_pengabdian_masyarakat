@@ -1,42 +1,80 @@
 /* App.css */
 
 body {
-    font-family: "Roboto", sans-serif;
-    background-color: #f5f5f5;
-    margin: 0;
-    padding: 0;
+  background-color: "#F5F7F8";
+  margin: 0;
+  padding: 0;
+}
+
+@media (max-width: 600px) {
+  .form-title {
+    font-size: 1.5rem; /* Atur ukuran font menjadi 1.5rem */
   }
-  
-  .container {
-    background-color: #fff;
-    margin-top: 50px;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+
+  .form-button {
+    margin-top: 1rem; /* Atur margin atas tombol menjadi 1rem */
+    margin-left: auto; /* Geser tombol ke kanan */
+    margin-right: 0; /* Hapus margin kanan */
   }
-  
-  .form-heading {
-    margin-bottom: 20px;
-    text-align: center;
-    color: #333;
+
+  /* Grid container */
+  .form-grid-container {
+    padding: 0 10px; /* Berikan padding ke grid container */
   }
-  
-  .form-control {
-    margin-bottom: 20px;
+
+  /* Textfield */
+  .form-textfield {
+    width: 100%; /* Textfield akan memenuhi lebar kontainer */
   }
-  
-  .input-file {
-    margin-bottom: 20px;
-  }
-  
-  .submit-btn {
-    margin-top: 20px;
-  }
-  
-  /* Style for validation error messages */
-  .error-message {
-    color: #f44336;
-    font-size: 0.8em;
-    margin-top: 5px;
-  }
-  
+}
+
+body::before {
+  content: ""; /* Diperlukan untuk menampilkan pseudo-element */
+  position: fixed; /* Memastikan pseudo-element tetap di belakang konten */
+  top: 0;
+  left: 0;
+  width: 100%; /* Lebar sesuai dengan body */
+  height: 100%; /* Tinggi sesuai dengan body */
+  filter: blur(3px) brightness(0.5); /* Mengatur efek blur dengan nilai 5px */
+  z-index: -1; /* Menempatkan pseudo-element di belakang konten */
+}
+
+.MuiPaper-root * {
+  font-family: "Shippori Antique", sans-serif !important;
+}
+
+.MuiTypography-root {
+  color: #222222;
+}
+
+.container {
+  margin-top: 50px;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+}
+
+.form-heading {
+  margin-bottom: 20px;
+  text-align: center;
+  color: #333;
+}
+
+.form-control {
+  margin-bottom: 20px;
+}
+
+.input-file {
+  margin-bottom: 20px;
+}
+
+.submit-btn {
+  margin-top: 20px;
+}
+
+/* Style for validation error messages */
+.error-message {
+  color: #f44336;
+  font-size: 0.8em;
+  margin-top: 5px;
+}

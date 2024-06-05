@@ -22,17 +22,17 @@ import './styles.css'; // Importing CSS
 const Surat = () => {
   const navigate = useNavigate();
   const [showInvoice, setShowInvoice] = useState(false);
-  const [nomorSurat, setNomorSurat] = useState('');
-  const [selectedName, setSelectedName] = useState('');
+  const [nomorSurat, setNomorSurat] = useState("");
+  const [selectedName, setSelectedName] = useState("");
   const [selectedData, setSelectedData] = useState({
-    ttl: '',
-    pekerjaan: '',
-    pendidikanTerakhir: '',
-    blok: '',
-    noRumah: '',
+    ttl: "",
+    pekerjaan: "",
+    pendidikanTerakhir: "",
+    blok: "",
+    noRumah: "",
     tanggal: [dayjs(), dayjs()],
   });
-  const [keteranganSurat, setKeteranganSurat] = useState('');
+  const [keteranganSurat, setKeteranganSurat] = useState("");
   const [data, setData] = useState([]);
 
   const componentRef = useRef();
@@ -56,10 +56,10 @@ const Surat = () => {
     const fileName = `surat_${nomorSurat}_${selectedName}.pdf`;
 
     // Kirim file name dan "nama" ke backend
-    fetch('http://127.0.0.1:5000/save_file_name', {
-      method: 'POST',
+    fetch("http://127.0.0.1:5000/save_file_name", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({ nama: selectedName, fileName }),
     })
@@ -69,18 +69,22 @@ const Surat = () => {
         html2pdf().from(content).set(pdfConfig).save(fileName);
       })
       .catch((error) => {
-        console.error('Error sending file name and "nama" to the backend:', error);
+        console.error(
+          'Error sending file name and "nama" to the backend:',
+          error
+        );
       });
   };
-
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const responseData = await axios.get('http://127.0.0.1:5000/get_saved_data');
+        const responseData = await axios.get(
+          "http://127.0.0.1:5000/get_saved_data"
+        );
         setData(responseData.data.savedData);
       } catch (error) {
-        console.error('Error:', error);
+        console.error("Error:", error);
       }
     };
 
@@ -91,11 +95,11 @@ const Surat = () => {
     const selectedPerson = data.find((item) => item.name === newValue);
     setSelectedName(newValue);
     setSelectedData({
-      ttl: selectedPerson?.ttl || '',
-      pekerjaan: selectedPerson?.job || '',
-      pendidikanTerakhir: selectedPerson?.lastEdu || '',
-      blok: selectedPerson?.blok || '',
-      noRumah: selectedPerson?.no || '',
+      ttl: selectedPerson?.ttl || "",
+      pekerjaan: selectedPerson?.job || "",
+      pendidikanTerakhir: selectedPerson?.lastEdu || "",
+      blok: selectedPerson?.blok || "",
+      noRumah: selectedPerson?.no || "",
       tanggal: selectedPerson?.tanggal || [dayjs(), dayjs()],
     });
   };
