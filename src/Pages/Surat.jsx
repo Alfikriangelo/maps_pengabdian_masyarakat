@@ -1,23 +1,18 @@
-import React, { useState, useRef, useEffect } from 'react';
-import Isi from '../Components/Surat/Isi';
-import Pembuka from '../Components/Surat/Pembuka';
-import Header from '../Components/Surat/Header';
-import Judul from '../Components/Surat/Judul';
-import Penutup from '../Components/Surat/Penutup';
-import { TextField } from '@mui/material';
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
-import { LocalizationProvider } from '@mui/x-date-pickers-pro';
-import { AdapterDayjs } from '@mui/x-date-pickers-pro/AdapterDayjs';
-import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
-import SignatureCanvas from 'react-signature-canvas';
-import dayjs from 'dayjs';
-import Button from '@mui/material/Button';
-import { useNavigate } from 'react-router-dom';
-import html2pdf from 'html2pdf.js';
-import Autocomplete from '@mui/material/Autocomplete';
-import axios from 'axios';
-import './styles.css'; // Importing CSS
-
+import React, { useState, useRef, useEffect } from "react";
+import Isi from "../Components/Surat/Isi";
+import Pembuka from "../Components/Surat/Pembuka";
+import Header from "../Components/Surat/Header";
+import Judul from "../Components/Surat/Judul";
+import Penutup from "../Components/Surat/Penutup";
+import { Box, TextField, Typography } from "@mui/material";
+import SignatureCanvas from "react-signature-canvas";
+import dayjs from "dayjs";
+import Button from "@mui/material/Button";
+import { useNavigate } from "react-router-dom";
+import html2pdf from "html2pdf.js";
+import Autocomplete from "@mui/material/Autocomplete";
+import axios from "axios";
+import "./Surat.css"; // Importing CSS
 
 const Surat = () => {
   const navigate = useNavigate();
@@ -54,6 +49,7 @@ const Surat = () => {
     };
 
     const fileName = `surat_${nomorSurat}_${selectedName}.pdf`;
+
 
     // Kirim file name dan "nama" ke backend
     fetch("http://127.0.0.1:5000/save_file_name", {
@@ -105,184 +101,266 @@ const Surat = () => {
   };
 
   return (
-    <>
-      
-      <div style={{ background: '#EFEFEF', marginTop: '-80px' }}>
-
-      <main className='main-container'>
-        {showInvoice ? (
-          <>
-          <div className='button-top'>
-    <Button onClick={() => navigate('/maps')} style={{ textTransform: 'none' }}>
-      Kembali
-    </Button>
-    <Button variant='outlined' onClick={handleDownload} style={{ textTransform: 'none'}}>
-      Download
-    </Button>
-  </div>
-  <div ref={componentRef} className='p-5'>
-    <Header handlePrint={handlePrint} />
-    <Judul nomorSurat={nomorSurat} />
-    <Pembuka />
-    <Isi
-      nama={selectedName}
-      ttl={selectedData.ttl}
-      pekerjaan={selectedData.pekerjaan}
-      pendidikanTerakhir={selectedData.pendidikanTerakhir}
-      blok={selectedData.blok}
-      noRumah={selectedData.noRumah}
-      keteranganSurat={keteranganSurat}
-      tanggal={selectedData.tanggal}
-    />
-    <Penutup />
-    <p className='text-right mt-10 mr-2'>Ketua Rukun Tetangga 05</p>
-    <div className='text-right mt-10'>
-      <SignatureCanvas
-        ref={signatureRef}
-        canvasProps={{ width: 400, height: 200, className: 'signature-canvas' }}
-      />
-    </div>
-  </div>
-  <div className='button-bottom'>
-    <Button className='red-button' onClick={clearSignature}>
-      Hapus
-    </Button>
-    <Button onClick={() => setShowInvoice(false)} className='blue-button'>
-      Edit
-    </Button>
-    </div>
-          </>
-        ) : (
-          <>
-            
-            <p className='font-bold text-3xl mb-3 text-left margin-top 30px' style={{marginTop: '30px', marginRight : '30px'}} >Form Surat Masuk</p>
-            <p className=' text-xl mb-3 text-left' style={{paddingBottom: '20px', marginBottom: '30px', borderBottom: '0.5px solid black'}}>
-            Layanan Surat Masuk</p>
-
-            <div className='flex flex-col justify-center'>
-              <label htmlFor='nomorSurat' className='mb-2'>
-                Nomor Surat
-              </label>
-              <TextField
-                type='text'
-                name='text'
-                id='nomorSurat'
-                placeholder=''
-                autoComplete='off'
-                value={nomorSurat}
-                onChange={(e) => setNomorSurat(e.target.value)}
-              />
-              <label htmlFor='namaWarga' className='mb-2 mt-2'>
-                Nama Warga
-              </label>
-              <Autocomplete
-                disablePortal
-                id='combo-box-demo'
-                options={data.map((item) => item.name)}
-                value={selectedName}
-                onChange={handleNameChange}
-                sx={{ width: 300 }}
-                renderInput={(params) => <TextField {...params} label='Nama Warga' />}
-              />
-              <label htmlFor='ttl' className='mb-2 mt-2'>
-                Tempat / Tanggal Lahir
-              </label>
-              <TextField
-                type='text'
-                name='text'
-                id='ttl'
-                placeholder=''
-                autoComplete='off'
-                value={selectedData.ttl}
-                onChange={(e) => setSelectedData({ ...selectedData, ttl: e.target.value })}
-              />
-              <label htmlFor='pekerjaan' className='mb-2 mt-2'>
-                Pekerjaan
-              </label>
-              <TextField
-                type='text'
-                name='text'
-                id='pekerjaan'
-                placeholder=''
-                autoComplete='off'
-                value={selectedData.pekerjaan}
-                onChange={(e) => setSelectedData({ ...selectedData, pekerjaan: e.target.value })}
-              />
-              <label htmlFor='pendidikanTerakhir' className='mb-2 mt-2'>
-                Pendidikan Terakhir
-              </label>
-              <TextField
-                type='text'
-                name='text'
-                id='pendidikanTerakhir'
-                placeholder=''
-                autoComplete='off'
-                value={selectedData.pendidikanTerakhir}
-                onChange={(e) =>
-                  setSelectedData({ ...selectedData, pendidikanTerakhir: e.target.value })
-                }
-              />
-              <label htmlFor='Blok' className='mb-2 mt-2'>
-                Blok
-              </label>
-              <TextField
-                type='text'
-                name='text'
-                id='blok'
-                placeholder=''
-                autoComplete='off'
-                value={selectedData.blok}
-                onChange={(e) => setSelectedData({ ...selectedData, blok: e.target.value })}
-              />
-              <label htmlFor='noRumah' className='mb-2 mt-2'>
-                Nomor Rumah
-              </label>
-              <TextField
-                type='text'
-                name='text'
-                id='noRumah'
-                placeholder=''
-                autoComplete='off'
-                value={selectedData.noRumah}
-                onChange={(e) => setSelectedData({ ...selectedData, noRumah: e.target.value })}
-              />
-              <label htmlFor='notes' className='mb-2 mt-2'>
-                Isi Surat
-              </label>
-              <textarea
-                className='mt-2 mb-2'
-                name='keterangan'
-                id='notes'
-                cols='20'
-                rows='10'
-                placeholder='Beri Keterangan Surat Secara Singkat'
-                value={keteranganSurat}
-                onChange={(e) => setKeteranganSurat(e.target.value)}></textarea>
-              <div className='mt-5 mb-5'>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DemoContainer components={['DateRangePicker']}>
-                    <DateRangePicker
-                      localeText={{ start: 'Dari', end: 'Sampai' }}
-                      value={selectedData.tanggal}
-                      onChange={(date) => setSelectedData({ ...selectedData, tanggal: date })}
-                    />
-                  </DemoContainer>
-                </LocalizationProvider>
-              </div>
-              <div className='flex' style={{ justifyContent: 'space-between', marginTop : '30px'}}>
-                <Button variant='outlined' onClick={() => navigate('/maps')}>
-                  Kembali
-                </Button>
-                <Button variant='contained' onClick={() => setShowInvoice(true)}>
-                  Kirim
+    <Box sx={{ backgroundColor: "#F5F7F8" }}>
+      <Box sx={{ marginTop: "-100px" }}>
+        <main className="main-container">
+          {showInvoice ? (
+            <Box sx={{ mx: 3, my: 5 }}>
+              <div
+                className="button-top"
+                style={{ justifyContent: "space-between", marginBottom: 10 }}
+              >
+                <div>
+                  <Button
+                    variant="outlined"
+                    onClick={() => navigate("/maps")}
+                    style={{ textTransform: "none" }}
+                  >
+                    Kembali
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    onClick={() => setShowInvoice(false)}
+                    className="blue-button"
+                    style={{ textTransform: "none", marginLeft: 15 }}
+                  >
+                    Edit
+                  </Button>
+                </div>
+                <Button
+                  variant="contained"
+                  onClick={handleDownload}
+                  style={{ textTransform: "none" }}
+                >
+                  Download
                 </Button>
               </div>
-            </div>
-          </>
-        )}
-      </main>
-      </div>
-    </>
+              <div ref={componentRef} className="p-5">
+                <Header handlePrint={handlePrint} />
+                <Judul nomorSurat={nomorSurat} />
+                <Pembuka />
+                <Isi
+                  nama={selectedName}
+                  ttl={selectedData.ttl}
+                  pekerjaan={selectedData.pekerjaan}
+                  pendidikanTerakhir={selectedData.pendidikanTerakhir}
+                  blok={selectedData.blok}
+                  noRumah={selectedData.noRumah}
+                  keteranganSurat={keteranganSurat}
+                  tanggal={selectedData.tanggal}
+                />
+                <Penutup />
+                <p className="text-right mt-10 mr-2">Ketua Rukun Tetangga 05</p>
+                <div className="text-right mt-10">
+                  <SignatureCanvas
+                    ref={signatureRef}
+                    canvasProps={{
+                      width: 400,
+                      height: 200,
+                      className: "signature-canvas",
+                    }}
+                  />
+                </div>
+              </div>
+              <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                <Button
+                  className="red-button"
+                  onClick={clearSignature}
+                  style={{ textTransform: "none" }}
+                >
+                  Hapus Tanda Tangan
+                </Button>
+              </div>
+            </Box>
+          ) : (
+            <Box sx={{ mx: 5, my: 4 }}>
+              <Typography
+                sx={{
+                  my: 5,
+                  fontWeight: "bold",
+                  fontSize: 28,
+                  textAlign: "center",
+                }}
+              >
+                Layanan surat
+              </Typography>
+
+              <div className="flex flex-col justify-center">
+                <label htmlFor="nomorSurat" className="mb-2">
+                  Nomor Surat
+                </label>
+                <TextField
+                  type="text"
+                  name="text"
+                  id="nomorSurat"
+                  placeholder=""
+                  autoComplete="off"
+                  value={nomorSurat}
+                  onChange={(e) => setNomorSurat(e.target.value)}
+                />
+                <label htmlFor="namaWarga" className="mb-2 mt-2">
+                  Nama Warga
+                </label>
+                <Autocomplete
+                  disablePortal
+                  id="combo-box-demo"
+                  options={data.map((item) => item.name)}
+                  value={selectedName}
+                  onChange={handleNameChange}
+                  sx={{ width: 300 }}
+                  renderInput={(params) => (
+                    <TextField {...params} label="Nama Warga" />
+                  )}
+                />
+                <label htmlFor="ttl" className="mb-2 mt-2">
+                  Tempat / Tanggal Lahir
+                </label>
+                <TextField
+                  type="text"
+                  name="text"
+                  id="ttl"
+                  placeholder=""
+                  autoComplete="off"
+                  value={selectedData.ttl}
+                  onChange={(e) =>
+                    setSelectedData({ ...selectedData, ttl: e.target.value })
+                  }
+                />
+                <label htmlFor="pekerjaan" className="mb-2 mt-2">
+                  Pekerjaan
+                </label>
+                <TextField
+                  type="text"
+                  name="text"
+                  id="pekerjaan"
+                  placeholder=""
+                  autoComplete="off"
+                  value={selectedData.pekerjaan}
+                  onChange={(e) =>
+                    setSelectedData({
+                      ...selectedData,
+                      pekerjaan: e.target.value,
+                    })
+                  }
+                />
+                <label htmlFor="pendidikanTerakhir" className="mb-2 mt-2">
+                  Pendidikan Terakhir
+                </label>
+                <TextField
+                  type="text"
+                  name="text"
+                  id="pendidikanTerakhir"
+                  placeholder=""
+                  autoComplete="off"
+                  value={selectedData.pendidikanTerakhir}
+                  onChange={(e) =>
+                    setSelectedData({
+                      ...selectedData,
+                      pendidikanTerakhir: e.target.value,
+                    })
+                  }
+                />
+                <label htmlFor="Blok" className="mb-2 mt-2">
+                  Blok
+                </label>
+                <TextField
+                  type="text"
+                  name="text"
+                  id="blok"
+                  placeholder=""
+                  autoComplete="off"
+                  value={selectedData.blok}
+                  onChange={(e) =>
+                    setSelectedData({ ...selectedData, blok: e.target.value })
+                  }
+                />
+                <label htmlFor="noRumah" className="mb-2 mt-2">
+                  Nomor Rumah
+                </label>
+                <TextField
+                  type="text"
+                  name="text"
+                  id="noRumah"
+                  placeholder=""
+                  autoComplete="off"
+                  value={selectedData.noRumah}
+                  onChange={(e) =>
+                    setSelectedData({
+                      ...selectedData,
+                      noRumah: e.target.value,
+                    })
+                  }
+                />
+                <label htmlFor="notes" className="mb-2 mt-2">
+                  Isi Surat
+                </label>
+                <textarea
+                  className="mt-2 mb-2"
+                  name="keterangan"
+                  id="notes"
+                  cols="20"
+                  rows="10"
+                  placeholder="Beri Keterangan Surat Secara Singkat"
+                  value={keteranganSurat}
+                  onChange={(e) => setKeteranganSurat(e.target.value)}
+                ></textarea>
+                <div className="mt-5 mb-5">
+                  <label htmlFor="tanggal">Tanggal:</label>
+                  <input
+                    style={{ marginLeft: 10 }}
+                    type="date"
+                    id="tanggal"
+                    value={selectedData.tanggal[0].format("YYYY-MM-DD")}
+                    onChange={(e) =>
+                      setSelectedData({
+                        ...selectedData,
+                        tanggal: [
+                          dayjs(e.target.value),
+                          selectedData.tanggal[1],
+                        ],
+                      })
+                    }
+                  />
+                  <span>&nbsp;-&nbsp;</span>
+                  <input
+                    type="date"
+                    value={selectedData.tanggal[1].format("YYYY-MM-DD")}
+                    onChange={(e) =>
+                      setSelectedData({
+                        ...selectedData,
+                        tanggal: [
+                          selectedData.tanggal[0],
+                          dayjs(e.target.value),
+                        ],
+                      })
+                    }
+                  />
+                </div>
+                <div
+                  className="flex"
+                  style={{ justifyContent: "space-between", marginTop: "30px" }}
+                >
+                  <Button
+                    variant="outlined"
+                    onClick={() => navigate("/maps")}
+                    style={{ textTransform: "none" }}
+                  >
+                    Kembali
+                  </Button>
+                  <Button
+                    variant="contained"
+                    onClick={() => setShowInvoice(true)}
+                    style={{ textTransform: "none" }}
+                  >
+                    Kirim
+                  </Button>
+                </div>
+              </div>
+            </Box>
+          )}
+        </main>
+      </Box>
+    </Box>
   );
 };
 
