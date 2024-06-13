@@ -41,7 +41,7 @@ const SideBar = ({ isOpen, selectedMarkerData, surat, onClose, hapus }) => {
             <X />
           </button>
           <img
-            src={selectedMarkerData.image_url_Home}
+            src={selectedMarkerData.image_url_Diri}
             alt={selectedMarkerData.name}
             style={{ display: "block", margin: "0 auto", height: "300px" }}
           />
