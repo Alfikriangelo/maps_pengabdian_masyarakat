@@ -29,6 +29,7 @@ const Surat = () => {
   });
   const [keteranganSurat, setKeteranganSurat] = useState("");
   const [data, setData] = useState([]);
+  const [saveHistory, setSaveHistory] = useState(false);
 
   const componentRef = useRef();
   const signatureRef = useRef();
@@ -52,24 +53,27 @@ const Surat = () => {
 
 
     // Kirim file name dan "nama" ke backend
-    fetch("http://127.0.0.1:5000/save_file_name", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ nama: selectedName, fileName }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        // Setelah mengirim file name dan "nama" ke backend, generate dan unduh PDF
-        html2pdf().from(content).set(pdfConfig).save(fileName);
+    if (saveHistory) {
+      // Kirim file name dan "nama" ke backend
+      fetch('http://127.0.0.1:5000/save_file_name', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ nama: selectedName, fileName }),
       })
-      .catch((error) => {
-        console.error(
-          'Error sending file name and "nama" to the backend:',
-          error
-        );
-      });
+        .then((response) => response.json())
+        .then((data) => {
+          // Setelah mengirim file name dan "nama" ke backend, generate dan unduh PDF
+          html2pdf().from(content).set(pdfConfig).save(fileName);
+        })
+        .catch((error) => {
+          console.error('Error sending file name and "nama" to the backend:', error);
+        });
+    } else {
+      // Generate and download PDF without saving history
+      html2pdf().from(content).set(pdfConfig).save(fileName);
+    }
   };
 
   useEffect(() => {
@@ -336,6 +340,18 @@ const Surat = () => {
                     }
                   />
                 </div>
+                <div>
+              <label style={{ display: 'flex', alignItems: 'center' }}>
+              <input
+                type="checkbox"
+                style={{ width: '20px', height: '20px', cursor: 'pointer', marginRight: '10px' }}
+                checked={saveHistory}
+                onChange={(e) => setSaveHistory(e.target.checked)}
+              />
+              Simpan Riwayat Surat
+              </label>
+
+              </div>
                 <div
                   className="flex"
                   style={{ justifyContent: "space-between", marginTop: "30px" }}
