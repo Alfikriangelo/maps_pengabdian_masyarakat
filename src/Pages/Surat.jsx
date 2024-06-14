@@ -51,27 +51,25 @@ const Surat = () => {
 
     const fileName = `surat_${nomorSurat}_${selectedName}.pdf`;
 
-
-    // Kirim file name dan "nama" ke backend
     if (saveHistory) {
-      // Kirim file name dan "nama" ke backend
-      fetch('http://127.0.0.1:5000/save_file_name', {
-        method: 'POST',
+      fetch("http://127.0.0.1:5000/save_file_name", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ nama: selectedName, fileName }),
       })
         .then((response) => response.json())
         .then((data) => {
-          // Setelah mengirim file name dan "nama" ke backend, generate dan unduh PDF
           html2pdf().from(content).set(pdfConfig).save(fileName);
         })
         .catch((error) => {
-          console.error('Error sending file name and "nama" to the backend:', error);
+          console.error(
+            'Error sending file name and "nama" to the backend:',
+            error
+          );
         });
     } else {
-      // Generate and download PDF without saving history
       html2pdf().from(content).set(pdfConfig).save(fileName);
     }
   };
@@ -92,16 +90,29 @@ const Surat = () => {
   }, []);
 
   const handleNameChange = (event, newValue) => {
-    const selectedPerson = data.find((item) => item.name === newValue);
     setSelectedName(newValue);
-    setSelectedData({
-      ttl: selectedPerson?.ttl || "",
-      pekerjaan: selectedPerson?.job || "",
-      pendidikanTerakhir: selectedPerson?.lastEdu || "",
-      blok: selectedPerson?.blok || "",
-      noRumah: selectedPerson?.no || "",
-      tanggal: selectedPerson?.tanggal || [dayjs(), dayjs()],
-    });
+
+    const selectedPerson = data.find((item) => item.name === newValue);
+
+    if (selectedPerson) {
+      setSelectedData({
+        ttl: selectedPerson?.ttl || "",
+        pekerjaan: selectedPerson?.job || "",
+        pendidikanTerakhir: selectedPerson?.lastEdu || "",
+        blok: selectedPerson?.blok || "",
+        noRumah: selectedPerson?.no || "",
+        tanggal: selectedPerson?.tanggal || [dayjs(), dayjs()],
+      });
+    } else {
+      setSelectedData({
+        ttl: "",
+        pekerjaan: "",
+        pendidikanTerakhir: "",
+        blok: "",
+        noRumah: "",
+        tanggal: [dayjs(), dayjs()],
+      });
+    }
   };
 
   return (
@@ -206,11 +217,15 @@ const Surat = () => {
                   Nama Warga
                 </label>
                 <Autocomplete
+                  freeSolo
                   disablePortal
                   id="combo-box-demo"
                   options={data.map((item) => item.name)}
                   value={selectedName}
                   onChange={handleNameChange}
+                  onInputChange={(event, newInputValue) => {
+                    setSelectedName(newInputValue);
+                  }}
                   sx={{ width: 300 }}
                   renderInput={(params) => (
                     <TextField {...params} label="Nama Warga" />
@@ -341,17 +356,21 @@ const Surat = () => {
                   />
                 </div>
                 <div>
-              <label style={{ display: 'flex', alignItems: 'center' }}>
-              <input
-                type="checkbox"
-                style={{ width: '20px', height: '20px', cursor: 'pointer', marginRight: '10px' }}
-                checked={saveHistory}
-                onChange={(e) => setSaveHistory(e.target.checked)}
-              />
-              Simpan Riwayat Surat
-              </label>
-
-              </div>
+                  <label style={{ display: "flex", alignItems: "center" }}>
+                    <input
+                      type="checkbox"
+                      style={{
+                        width: "20px",
+                        height: "20px",
+                        cursor: "pointer",
+                        marginRight: "10px",
+                      }}
+                      checked={saveHistory}
+                      onChange={(e) => setSaveHistory(e.target.checked)}
+                    />
+                    Simpan Riwayat Surat
+                  </label>
+                </div>
                 <div
                   className="flex"
                   style={{ justifyContent: "space-between", marginTop: "30px" }}
